@@ -1,0 +1,31 @@
+[
+  {
+    "firstName": "Ilija",
+    "lastName": "Petrovic",
+    "email": "ilijapetrovic@gamil.com",
+    "password": "sifra",
+    "role": "admin"
+  },
+  {
+    "firstName": "Milos",
+    "lastName": "Resimic",
+    "email": "milosresimic@gamil.com",
+    "password": "sifra",
+    "role": "member",
+    "memberData": {
+      "membershipStart": "2026-04-15",
+      "membershipEnd": "2026-5-15"
+    }
+  },
+  {
+    "firstName": "Ivan",
+    "lastName": "Curcic",
+    "email": "ivancurcic@gamil.com",
+    "password": "sifra",
+    "role": "trainer",
+    "trainerData": {
+      "specialization": ["Bodybilding", "Street Workout"],
+      "hourlyRate": 30
+    }
+  }
+]
