@@ -2,14 +2,14 @@
   {
     "firstName": "Ilija",
     "lastName": "Petrovic",
-    "email": "ilijapetrovic@gamil.com",
+    "email": "ilijapetrovic@gmail.com",
     "password": "sifra",
     "role": "admin"
   },
   {
     "firstName": "Milos",
     "lastName": "Resimic",
-    "email": "milosresimic@gamil.com",
+    "email": "milosresimic@gmail.com",
     "password": "sifra",
     "role": "member",
     "memberData": {
@@ -20,7 +20,7 @@
   {
     "firstName": "Ivan",
     "lastName": "Curcic",
-    "email": "ivancurcic@gamil.com",
+    "email": "ivancurcic@gmail.com",
     "password": "sifra",
     "role": "trainer",
     "trainerData": {
