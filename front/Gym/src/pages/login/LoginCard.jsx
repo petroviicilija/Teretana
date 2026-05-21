@@ -46,6 +46,8 @@ export function LoginCard() {
       });
 
       const { user, token } = res.data;
+      console.log(res.data);
+      console.log(typeof res.data);
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(user));
 
