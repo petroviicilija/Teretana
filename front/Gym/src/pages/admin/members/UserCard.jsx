@@ -2,8 +2,12 @@ import styles from './UserCard.module.css';
 import axios from 'axios';
 import EditButton from '../../../assets/editButton.png';
 import DeleteButton from '../../../assets/deleteButton.png';
+import { useNavigate } from 'react-router';
 
-export function UserCard({user, token, getUsers}) {
+export function UserCard({ user, token, getUsers }) {
+
+  const navigate = useNavigate();
+
   async function deleteUser() {
 
     await axios.delete(`/api/v1/admin/${user._id}`, {
