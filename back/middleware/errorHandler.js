@@ -7,8 +7,6 @@ function errorHandler(err, req, res, next) {
     message: err.message || 'Something went wrong'
   };
 
-  // console.log(err);
-
   // Error for bad inputs
   if (err.name === 'ValidationError') {
     customError.message = Object.values(err.errors).map((item) => item.message).join(', ');

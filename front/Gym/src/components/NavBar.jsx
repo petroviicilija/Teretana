@@ -1,28 +1,29 @@
 import styles from './NavBar.module.css';
 import Avatar from '../assets/gym-guy.jpg';
+import GirlAvatar from '../assets/gym-girl.jpg';
 import Logo from '../assets/whiteThundergym.png';
 import { useNavigate } from 'react-router';
 
-export function NavBar({user}) {
+export function NavBar({ user, collapsed, setCollapsed }) {
 
   const navigate = useNavigate();
 
-  function allMembers(){
-    navigate('members');
-  }
-
-  function DashBoard(){
-    navigate('/admin')
-  }
-
   return (
-    <nav className={styles['nav-bar']} >
-      <img src={Avatar} className={styles['avatar-img']} />
-      <div className={styles['simple-text']}>
-        Welcome back {user.name}
+    <nav className={`${styles['nav-bar']} ${collapsed ? styles['collapsed'] : ''}`} >
+      <button className={styles['menu-btn']} onClick={() => setCollapsed(!collapsed)}>
+        ☰
+      </button>
+      {user.gender === 'man' ? <img src={Avatar} className={styles['avatar-img']} /> : <img src={GirlAvatar} className={styles['avatar-img']} /> }
+      {!collapsed && (
+        <div className={styles['simple-text']}>
+          Welcome back <span>{user.name}</span>
+        </div>
+      )}
+      <div className={styles['nav-links']}>
+        <button onClick={() => navigate('/admin')}>DashBoard</button>
+        <button onClick={() => navigate('members')}>Members</button>
+        <button onClick={() => navigate('createUser')} >Create User</button>
       </div>
-      <button onClick={allMembers}>Members</button>
-      <button onClick={DashBoard}>DashBoard</button>
       <img src={Logo} className={styles['logo-img']} />
     </nav>
   );

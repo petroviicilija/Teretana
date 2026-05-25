@@ -1,0 +1,23 @@
+.user-container{
+  display: flex;
+  align-items: center;
+  background-color: rgb(42, 42, 42);
+  color: white;
+  margin: 10px 0px;
+}
+.button-container{
+  margin-left: auto;
+}
+.edit-button{
+  height: 25px;
+  margin-right: 7px;
+}
+.edit-button:hover{
+  cursor: pointer;
+}
+.delete-button:hover{
+  cursor: pointer;
+}
+.delete-button{
+  height: 25px;
+}

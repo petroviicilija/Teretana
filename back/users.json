@@ -4,6 +4,7 @@
     "lastName": "Petrovic",
     "email": "ilijapetrovic@gmail.com",
     "password": "sifra",
+    "gender": "man",
     "role": "admin"
   },
   {
@@ -12,6 +13,7 @@
     "email": "milosresimic@gmail.com",
     "password": "sifra",
     "role": "member",
+    "gender": "man",
     "memberData": {
       "membershipStart": "2026-04-15",
       "membershipEnd": "2026-5-15"
@@ -23,9 +25,19 @@
     "email": "ivancurcic@gmail.com",
     "password": "sifra",
     "role": "trainer",
+    "gender": "man",
     "trainerData": {
       "specialization": ["Bodybilding", "Street Workout"],
       "hourlyRate": 30
     }
+  },
+  {
+    "firstName": "Milica",
+    "lastName": "Petrovic",
+    "email": "milicapetrovic@gmail.com",
+    "password": "sifra",
+    "gender": "woman",
+    "role": "admin"
   }
+
 ]
