@@ -30,7 +30,7 @@ export function UserCard({ user, token, getUsers }) {
         </div>
       </div>
       <div className={styles['button-container']}>
-        <img src={EditButton} className={styles['edit-button']} />
+        <img src={EditButton} className={styles['edit-button']} onClick={() => navigate('../editUser')} />
         <img src={DeleteButton} className={styles['delete-button']} onClick={deleteUser} />
       </div>
     </div>

@@ -13,7 +13,7 @@ export function NavBar({ user, collapsed, setCollapsed }) {
       <button className={styles['menu-btn']} onClick={() => setCollapsed(!collapsed)}>
         ☰
       </button>
-      {user.gender === 'man' ? <img src={Avatar} className={styles['avatar-img']} /> : <img src={GirlAvatar} className={styles['avatar-img']} /> }
+      {user.gender === 'man' ? <img src={Avatar} className={styles['avatar-img']} /> : <img src={GirlAvatar} className={styles['avatar-img']} />}
       {!collapsed && (
         <div className={styles['simple-text']}>
           Welcome back <span>{user.name}</span>
@@ -21,7 +21,7 @@ export function NavBar({ user, collapsed, setCollapsed }) {
       )}
       <div className={styles['nav-links']}>
         <button onClick={() => navigate('/admin')}>DashBoard</button>
-        <button onClick={() => navigate('members')}>Members</button>
+        <button onClick={() => navigate('users')}>Users</button>
         <button onClick={() => navigate('createUser')} >Create User</button>
       </div>
       <img src={Logo} className={styles['logo-img']} />

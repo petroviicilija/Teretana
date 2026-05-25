@@ -1,10 +1,10 @@
-import styles from './AdminMembers.module.css';
+import styles from './AdminUsers.module.css';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useOutletContext } from "react-router";
 import { UserCard } from './UserCard.jsx';
 
-export function AdminMembers() {
+export function AdminUsers() {
 
   const { token } = useOutletContext();
 

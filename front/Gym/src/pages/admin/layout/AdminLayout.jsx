@@ -2,7 +2,6 @@ import styles from './AdminLayout.module.css';
 import { NavBar } from '../../../components/NavBar.jsx';
 import { Outlet } from 'react-router';
 import { useState } from 'react';
-// import axios from 'axios';
 
 export function AdminLayout() {
 
