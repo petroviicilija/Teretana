@@ -27,7 +27,10 @@
     "role": "trainer",
     "gender": "man",
     "trainerData": {
-      "specialization": ["Bodybilding", "Street Workout"],
+      "specialization": [
+        "Bodybilding",
+        "Street Workout"
+      ],
       "hourlyRate": 30
     }
   },
@@ -38,6 +41,450 @@
     "password": "sifra",
     "gender": "woman",
     "role": "admin"
+  },
+  {
+    "firstName": "Nikola",
+    "lastName": "Jovanovic",
+    "email": "nikolajovanovic@gmail.com",
+    "password": "sifra",
+    "gender": "man",
+    "role": "member",
+    "memberData": {
+      "membershipStart": "2026-03-10",
+      "membershipEnd": "2026-04-10"
+    }
+  },
+  {
+    "firstName": "Stefan",
+    "lastName": "Markovic",
+    "email": "stefanmarkovic@gmail.com",
+    "password": "sifra",
+    "gender": "man",
+    "role": "trainer",
+    "trainerData": {
+      "specialization": [
+        "Powerlifting",
+        "Conditioning"
+      ],
+      "hourlyRate": 35
+    }
+  },
+  {
+    "firstName": "Jovana",
+    "lastName": "Nikolic",
+    "email": "jovananikolic@gmail.com",
+    "password": "sifra",
+    "gender": "woman",
+    "role": "member",
+    "memberData": {
+      "membershipStart": "2026-02-01",
+      "membershipEnd": "2026-03-01"
+    }
+  },
+  {
+    "firstName": "Ana",
+    "lastName": "Kovacevic",
+    "email": "anakovacevic@gmail.com",
+    "password": "sifra",
+    "gender": "woman",
+    "role": "trainer",
+    "trainerData": {
+      "specialization": [
+        "Yoga",
+        "Pilates"
+      ],
+      "hourlyRate": 28
+    }
+  },
+  {
+    "firstName": "Marko",
+    "lastName": "Stojanovic",
+    "email": "markostojanovic@gmail.com",
+    "password": "sifra",
+    "gender": "man",
+    "role": "member",
+    "memberData": {
+      "membershipStart": "2026-01-12",
+      "membershipEnd": "2026-02-12"
+    }
+  },
+  {
+    "firstName": "Teodora",
+    "lastName": "Milenkovic",
+    "email": "teodoramilenkovic@gmail.com",
+    "password": "sifra",
+    "gender": "woman",
+    "role": "admin"
+  },
+  {
+    "firstName": "Luka",
+    "lastName": "Pavlovic",
+    "email": "lukapavlovic@gmail.com",
+    "password": "sifra",
+    "gender": "man",
+    "role": "trainer",
+    "trainerData": {
+      "specialization": [
+        "Crossfit",
+        "Functional Training"
+      ],
+      "hourlyRate": 40
+    }
+  },
+  {
+    "firstName": "Sara",
+    "lastName": "Ilic",
+    "email": "sarailic@gmail.com",
+    "password": "sifra",
+    "gender": "woman",
+    "role": "member",
+    "memberData": {
+      "membershipStart": "2026-05-01",
+      "membershipEnd": "2026-06-01"
+    }
+  },
+  {
+    "firstName": "Nemanja",
+    "lastName": "Djordjevic",
+    "email": "nemanjadjordjevic@gmail.com",
+    "password": "sifra",
+    "gender": "man",
+    "role": "member",
+    "memberData": {
+      "membershipStart": "2026-04-20",
+      "membershipEnd": "2026-05-20"
+    }
+  },
+  {
+    "firstName": "Nemanja",
+    "lastName": "Pavlovic",
+    "email": "nemanjapavlovic@gmail.com",
+    "password": "sifra",
+    "gender": "man",
+    "role": "member",
+    "memberData": {
+      "membershipStart": "2026-03-15",
+      "membershipEnd": "2026-06-15"
+    }
+  },
+  {
+    "firstName": "Luka",
+    "lastName": "Savic",
+    "email": "lukasavic@gmail.com",
+    "password": "sifra",
+    "gender": "man",
+    "role": "member",
+    "memberData": {
+      "membershipStart": "2026-05-01",
+      "membershipEnd": "2026-06-01"
+    }
+  },
+  {
+    "firstName": "Katarina",
+    "lastName": "Tomic",
+    "email": "katarinatomic@gmail.com",
+    "password": "sifra",
+    "gender": "woman",
+    "role": "member",
+    "memberData": {
+      "membershipStart": "2026-02-11",
+      "membershipEnd": "2026-03-11"
+    }
+  },
+  {
+    "firstName": "Dusan",
+    "lastName": "Matic",
+    "email": "dusanmatic@gmail.com",
+    "password": "sifra",
+    "gender": "man",
+    "role": "member",
+    "memberData": {
+      "membershipStart": "2026-03-08",
+      "membershipEnd": "2026-04-08"
+    }
+  },
+  {
+    "firstName": "Andrej",
+    "lastName": "Simic",
+    "email": "andrejsimic@gmail.com",
+    "password": "sifra",
+    "gender": "man",
+    "role": "member",
+    "memberData": {
+      "membershipStart": "2026-01-20",
+      "membershipEnd": "2026-04-20"
+    }
+  },
+  {
+    "firstName": "Jelena",
+    "lastName": "Radovic",
+    "email": "jelenaradovic@gmail.com",
+    "password": "sifra",
+    "gender": "woman",
+    "role": "member",
+    "memberData": {
+      "membershipStart": "2026-05-12",
+      "membershipEnd": "2026-06-12"
+    }
+  },
+  {
+    "firstName": "Uros",
+    "lastName": "Vasic",
+    "email": "urosvasic@gmail.com",
+    "password": "sifra",
+    "gender": "man",
+    "role": "member",
+    "memberData": {
+      "membershipStart": "2026-02-14",
+      "membershipEnd": "2026-03-14"
+    }
+  },
+  {
+    "firstName": "Tamara",
+    "lastName": "Grujic",
+    "email": "tamaragrujic@gmail.com",
+    "password": "sifra",
+    "gender": "woman",
+    "role": "member",
+    "memberData": {
+      "membershipStart": "2026-03-18",
+      "membershipEnd": "2026-06-18"
+    }
+  },
+  {
+    "firstName": "Petar",
+    "lastName": "Milosevic",
+    "email": "petarmilosevic@gmail.com",
+    "password": "sifra",
+    "gender": "man",
+    "role": "member",
+    "memberData": {
+      "membershipStart": "2026-04-07",
+      "membershipEnd": "2026-05-07"
+    }
+  },
+  {
+    "firstName": "Sofija",
+    "lastName": "Jaksic",
+    "email": "sofijajaksic@gmail.com",
+    "password": "sifra",
+    "gender": "woman",
+    "role": "member",
+    "memberData": {
+      "membershipStart": "2026-01-25",
+      "membershipEnd": "2026-02-25"
+    }
+  },
+  {
+    "firstName": "Vuk",
+    "lastName": "Kostic",
+    "email": "vukkostic@gmail.com",
+    "password": "sifra",
+    "gender": "man",
+    "role": "member",
+    "memberData": {
+      "membershipStart": "2026-02-28",
+      "membershipEnd": "2026-05-28"
+    }
+  },
+  {
+    "firstName": "Milena",
+    "lastName": "Panic",
+    "email": "milenapanic@gmail.com",
+    "password": "sifra",
+    "gender": "woman",
+    "role": "member",
+    "memberData": {
+      "membershipStart": "2026-03-03",
+      "membershipEnd": "2026-04-03"
+    }
+  },
+  {
+    "firstName": "Aleksa",
+    "lastName": "Djordjevic",
+    "email": "aleksadjordjevic@gmail.com",
+    "password": "sifra",
+    "gender": "man",
+    "role": "member",
+    "memberData": {
+      "membershipStart": "2026-05-15",
+      "membershipEnd": "2026-08-15"
+    }
+  },
+  {
+    "firstName": "Ivana",
+    "lastName": "Cvetkovic",
+    "email": "ivanacvetkovic@gmail.com",
+    "password": "sifra",
+    "gender": "woman",
+    "role": "member",
+    "memberData": {
+      "membershipStart": "2026-04-10",
+      "membershipEnd": "2026-07-10"
+    }
+  },
+  {
+    "firstName": "Nikola",
+    "lastName": "Savic",
+    "email": "nikolasavic@gmail.com",
+    "password": "sifra",
+    "gender": "man",
+    "role": "member",
+    "memberData": {
+      "membershipStart": "2026-01-17",
+      "membershipEnd": "2026-02-17"
+    }
+  },
+  {
+    "firstName": "Marija",
+    "lastName": "Zivkovic",
+    "email": "marijazivkovic@gmail.com",
+    "password": "sifra",
+    "gender": "woman",
+    "role": "member",
+    "memberData": {
+      "membershipStart": "2026-05-10",
+      "membershipEnd": "2026-07-10"
+    }
+  },
+  {
+    "firstName": "Katarina",
+    "lastName": "Simic",
+    "email": "katarinasimic@gmail.com",
+    "password": "sifra",
+    "gender": "woman",
+    "role": "trainer",
+    "trainerData": {
+      "specialization": [
+        "Cardio",
+        "Weight Loss"
+      ],
+      "hourlyRate": 32
+    }
+  },
+  {
+    "firstName": "Filip",
+    "lastName": "Ristic",
+    "email": "filipristic@gmail.com",
+    "password": "sifra",
+    "gender": "man",
+    "role": "member",
+    "memberData": {
+      "membershipStart": "2026-03-05",
+      "membershipEnd": "2026-04-05"
+    }
+  },
+  {
+    "firstName": "Marija",
+    "lastName": "Tomic",
+    "email": "marijatomic@gmail.com",
+    "password": "sifra",
+    "gender": "woman",
+    "role": "member",
+    "memberData": {
+      "membershipStart": "2026-02-18",
+      "membershipEnd": "2026-03-18"
+    }
+  },
+  {
+    "firstName": "Andrej",
+    "lastName": "Savic",
+    "email": "andrejsavic@gmail.com",
+    "password": "sifra",
+    "gender": "man",
+    "role": "trainer",
+    "trainerData": {
+      "specialization": [
+        "Bodybuilding",
+        "Nutrition"
+      ],
+      "hourlyRate": 45
+    }
+  },
+  {
+    "firstName": "Mina",
+    "lastName": "Lazic",
+    "email": "minalazic@gmail.com",
+    "password": "sifra",
+    "gender": "woman",
+    "role": "member",
+    "memberData": {
+      "membershipStart": "2026-01-25",
+      "membershipEnd": "2026-02-25"
+    }
+  },
+  {
+    "firstName": "Uros",
+    "lastName": "Zivkovic",
+    "email": "uroszivkovic@gmail.com",
+    "password": "sifra",
+    "gender": "man",
+    "role": "admin"
+  },
+  {
+    "firstName": "Jelena",
+    "lastName": "Mitrovic",
+    "email": "jelenamitrovic@gmail.com",
+    "password": "sifra",
+    "gender": "woman",
+    "role": "trainer",
+    "trainerData": {
+      "specialization": [
+        "Aerobics",
+        "Dance Fitness"
+      ],
+      "hourlyRate": 27
+    }
+  },
+  {
+    "firstName": "Vuk",
+    "lastName": "Popovic",
+    "email": "vukpopovic@gmail.com",
+    "password": "sifra",
+    "gender": "man",
+    "role": "member",
+    "memberData": {
+      "membershipStart": "2026-04-01",
+      "membershipEnd": "2026-05-01"
+    }
+  },
+  {
+    "firstName": "Tamara",
+    "lastName": "Jankovic",
+    "email": "tamarajankovic@gmail.com",
+    "password": "sifra",
+    "gender": "woman",
+    "role": "member",
+    "memberData": {
+      "membershipStart": "2026-03-14",
+      "membershipEnd": "2026-04-14"
+    }
+  },
+  {
+    "firstName": "Ognjen",
+    "lastName": "Radulovic",
+    "email": "ognjenradulovic@gmail.com",
+    "password": "sifra",
+    "gender": "man",
+    "role": "trainer",
+    "trainerData": {
+      "specialization": [
+        "HIIT",
+        "Strength Training"
+      ],
+      "hourlyRate": 38
+    }
+  },
+  {
+    "firstName": "Kristina",
+    "lastName": "Peric",
+    "email": "kristinaperic@gmail.com",
+    "password": "sifra",
+    "gender": "woman",
+    "role": "member",
+    "memberData": {
+      "membershipStart": "2026-05-10",
+      "membershipEnd": "2026-06-10"
+    }
   }
-
 ]

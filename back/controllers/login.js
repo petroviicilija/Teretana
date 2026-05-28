@@ -8,7 +8,7 @@ async function login(req, res) {
     throw new BadRequestError('Please provide email and name!');
   }
 
-  const user = await User.findOne({ email: email });
+  const user = await User.findOne({ email: email }).select('+password');
   if (!user) {
     throw new UnauthenticatedError('Invalid Credentials');
   }

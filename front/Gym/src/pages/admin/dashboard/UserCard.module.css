@@ -1,0 +1,13 @@
+.user-card{
+  display: flex;
+  align-items: center;
+  background-color: gray;
+  margin: 10px 0px;
+}
+.status-container{
+  margin: 0px 10px;
+}
+.renew-button{
+  margin-left: auto;
+  cursor: pointer;
+}

@@ -13,6 +13,13 @@ const memberDataSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   }
+}, {
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true }
+});
+
+memberDataSchema.virtual('isActive').get(function () {
+  return this.membershipEnd > new Date();
 });
 
 export default memberDataSchema;

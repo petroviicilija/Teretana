@@ -39,27 +39,41 @@ export function AdminUsers() {
   if (loading) return;
 
   return (
-    <>
-      <input type="text" placeholder='Search' onChange={(event) => setSearchText(event.target.value)} />
-      <select name="role" value={searchRole} onChange={(event) => setSearchRole(event.target.value)}>
-        <option value="">All</option>
-        <option value="member">Member</option>
-        <option value="trainer">Trainer</option>
-        <option value="admin">Admin</option>
-      </select>
-      <button onClick={getUsers}>Search</button>
-      {
-        users.map((user) => {
-          return <UserCard key={user.email} user={user} token={token} getUsers={getUsers} />
-        })
-      }
-      <div className={styles['page-buttons-container']}>
-      {
-        Array.from({length: totalPages},(_, index) => (
-          <button key={index} className={styles['page-button']} onClick={() => setPage(index+1)}>{index + 1}</button>
-        ))
-      }
+    <div className={styles['users-page']}>
+      <div className={styles['search-section']}>
+
+        <div className={styles['header-section']}>
+          <h1>Users</h1>
+          <p>Manage all ThunderGym users</p>
+        </div>
+
+        <div className={styles['filters-container']}>
+          <input type="text" value={searchText} placeholder='Search by name or email' onChange={(event) => setSearchText(event.target.value)} />
+          <select name="role" value={searchRole} onChange={(event) => setSearchRole(event.target.value)}>
+            <option value="">All Roles</option>
+            <option value="member">Member</option>
+            <option value="trainer">Trainer</option>
+            <option value="admin">Admin</option>
+          </select>
+          <button onClick={getUsers}>Search</button>
+        </div>
       </div>
-    </>
+
+      <div className={styles['users-grid']}>
+        {
+          users.map((user) => {
+            return <UserCard key={user.email} user={user} token={token} getUsers={getUsers} />
+          })
+        }
+      </div>
+
+      <div className={styles['page-buttons-container']}>
+        {
+          Array.from({ length: totalPages }, (_, index) => (
+            <button key={index} className={styles['page-button']} onClick={() => setPage(index + 1)}>{index + 1}</button>
+          ))
+        }
+      </div>
+    </div>
   );
 }

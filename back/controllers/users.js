@@ -4,7 +4,7 @@ import { BadRequestError, NotFoundError } from '../errors/index.js';
 
 async function getUser(req, res){
   const userId = req.params.id;
-  const user = await User.findById({_id: userId});
+  const user = await User.findById({_id: userId}).select('-__v');
 
   if(!user){
     throw new NotFoundError(`User with id:${userId} does not exist`)
@@ -29,7 +29,7 @@ async function updateUser(req, res){
   const user = await User.findByIdAndUpdate({_id: userId}, req.body, {
     returnDocument: 'after',
     runValidators: true
-  });
+  }).select('-__v');
 
   if(!user){
     throw new NotFoundError(`User with id:${userId} does not exist`)

@@ -29,18 +29,18 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     minlength: [5, 'Password must have at least 5 characters'],
-    required: [true, 'Please provide password']
+    required: [true, 'Please provide password'],
+    select: false
   },
   gender: {
     type: String,
-    required: true,
+    required: [true, 'Please provide a gender for a user.'],
     enum: ['man', 'woman']
   },
   role: {
     type: String,
-    required: true,
+    required: [true, 'Please provide a role for a user.'],
     enum: ['member', 'trainer', 'admin'],
-    immutable: true
   },
   createdAt: {
     type: Date,
@@ -58,7 +58,9 @@ const userSchema = new mongoose.Schema({
       return this.role === 'trainer';
     }, 'Trainer data must be provided.']
   }
-}, { timestamps: true });
+}, {
+  timestamps: true,
+});
 
 userSchema.pre('save', async function () {
   const salt = await bcrypt.genSalt(10);
@@ -71,7 +73,7 @@ userSchema.methods.checkPassword = async function (submitedPassword) {
 };
 
 userSchema.methods.createJWT = function () {
-  return jwt.sign({ userId: this._id, name: this.firstName, email: this.email, role: this.role }, process.env.JWT_SECRET, {
+  return jwt.sign({ name: this.firstName, role: this.role }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_LIFETIME
   });
 };

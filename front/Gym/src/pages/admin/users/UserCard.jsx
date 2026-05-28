@@ -21,16 +21,63 @@ export function UserCard({ user, token, getUsers }) {
 
   return (
     <div className={styles['user-container']}>
-      <div className={styles['info-container']}>
-        <div>
+      <div className={styles['left-section']}>
+
+        <div className={styles['role-badge']}>
           {user.role}
         </div>
-        <div>
-          {user.firstName} {user.lastName}
+
+        <div className={styles['user-main-info']}>
+          <h2>
+            {user.firstName} {user.lastName}
+          </h2>
+          <p>{user.email}</p>
         </div>
+
       </div>
+
+      <div className={styles['extra-info']}>
+
+        <div>
+          <span>Gender</span>
+          <p>{user.gender}</p>
+        </div>
+
+        {user.role === 'member' && (
+          <>
+            <div>
+              <span>Membership Start</span>
+              <p>{user.memberData?.membershipStart.split('T')[0]}</p>
+            </div>
+
+            <div>
+              <span>Membership End</span>
+              <p>{user.memberData?.membershipEnd.split('T')[0]}</p>
+            </div>
+            <div>
+              <span>Status</span>
+              {user.memberData?.isActive ? <p className={styles['active-status']}>Active</p> : <p className={styles['not-active-status']}>Not Active</p>}
+            </div>
+          </>
+        )}
+
+        {user.role === 'trainer' && (
+          <>
+            <div>
+              <span>Specialization</span>
+              <p>{user.trainerData?.specialization.join(', ')}</p>
+            </div>
+
+            <div>
+              <span>Hourly Rate</span>
+              <p>{user.trainerData?.hourlyRate}€</p>
+            </div>
+          </>
+        )}
+      </div>
+
       <div className={styles['button-container']}>
-        <img src={EditButton} className={styles['edit-button']} onClick={() => navigate('../editUser')} />
+        <img src={EditButton} className={styles['edit-button']} onClick={() => navigate(`../editUser/${user._id}`)} />
         <img src={DeleteButton} className={styles['delete-button']} onClick={deleteUser} />
       </div>
     </div>

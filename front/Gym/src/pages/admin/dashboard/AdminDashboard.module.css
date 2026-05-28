@@ -1,0 +1,6 @@
+.info-container{
+  display: flex;
+}
+.info-container div{
+  margin-right: 10px;
+}

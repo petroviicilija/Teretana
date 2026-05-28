@@ -1,8 +1,99 @@
-.page-buttons-container{
-  display: flex;
+.users-page {
+  min-height: 100vh;
+  padding: 40px;
+  background: radial-gradient(circle at top, #1a1a1a 0%, #000 70%);
 }
-.page-button{
+
+/*Header*/
+
+.header-section {
+  margin-bottom: 30px;
+}
+.header-section h1 {
+  color: white;
+  font-size: 42px;
+  margin-bottom: 10px;
+}
+.header-section p {
+  color: #aaa;
+  font-size: 17px;
+}
+
+/*Search card*/
+
+.search-section {
+  background: rgba(20,20,20,0.95);
+  border: 2px solid #ffb300;
+  border-radius: 28px;
+  padding: 35px;
+  margin-bottom: 35px;
+  box-shadow: 0 0 25px rgba(255, 179, 0, 0.18), 0 0 60px rgba(255, 140, 0, 0.08);
+}
+.filters-container {
+  display: grid;
+  grid-template-columns: 1fr 220px 180px;
+  gap: 20px;
+}
+.filters-container input,
+.filters-container select {
+  height: 58px;
+  border: 2px solid transparent;
+  border-radius: 16px;
+  background: #111;
+  color: white;
+  padding: 0 18px;
+  font-size: 16px;
+  outline: none;
+  transition: 0.25s ease;
+}
+.filters-container input:focus,
+.filters-container select:focus {
+  border-color: #ffb300;
+  box-shadow: 0 0 15px rgba(255,179,0,0.3);
+}
+.filters-container button {
+  border: none;
+  border-radius: 16px;
+  background: linear-gradient( 135deg, #ffcc00, #ff8800 );
+  color: black;
+  font-size: 16px;
+  font-weight: bold;
   cursor: pointer;
-  padding: 3px;
-  margin-right: 10px;
+  transition: 0.25s ease;
+}
+.filters-container button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 18px rgba(255,179,0,0.35);
+}
+
+/*Users*/
+
+.users-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/*Pagination*/
+.page-buttons-container {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 40px;
+}
+.page-button {
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 14px;
+  background: #111;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+.page-button:hover {
+  background: linear-gradient( 135deg, #ffcc00, #ff8800 );
+  color: black;
+  transform: translateY(-2px);
 }
