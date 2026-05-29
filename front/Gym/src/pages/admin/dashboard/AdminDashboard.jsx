@@ -2,9 +2,13 @@ import styles from './AdminDashboard.module.css';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useOutletContext } from 'react-router';
-import { UserCard } from './UserCard.jsx';
+import { MemberCard } from './MemberCard.jsx';
+import { NewMemberCard } from './NewMemberCard.jsx';
+import { PieChart } from './PieChart.jsx';
 
 export function AdminDashboard() {
+
+  //Dodati middle gird za Members whose membership will soon expire
 
   const [stats, setStats] = useState();
   const [email, setEmail] = useState('');
@@ -30,49 +34,108 @@ export function AdminDashboard() {
   }, []);
 
   async function searchEmail() {
-    const res = await axios.get('/api/v1/admin', {
-      params: {
-        role: 'member',
-        search: email,
-        limit: 3
-      },
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    setUsers(res.data.users);
-    setSearch(true);
+    if (email !== '') {
+      const res = await axios.get('/api/v1/admin', {
+        params: {
+          role: 'member',
+          search: email,
+          limit: 3
+        },
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      setUsers(res.data.users);
+      setSearch(true);
+    } else {
+      setSearch(false);
+    }
   }
 
   if (!stats) return;
 
   return (
-    <div>
-      <input type="text" placeholder='Search by email' onChange={(event) => setEmail(event.target.value)} />
-      <button onClick={searchEmail}>Search</button>
-      {search && users.map((user) => {
-        return (
-          <UserCard key={user.email} user={user} searchEmail={searchEmail} token={token} />
-        )
-      })}
-      <div className={styles['info-container']}>
-        <div>
-          <p>Number of members</p>
-          {stats.memberCount}
+    <div className={styles['dashboard-page']}>
+
+      <div className={styles['dashboard-header']}>
+        <h1>Dashboard</h1>
+        <p>ThunderGym admin overview</p>
+      </div>
+
+      <div className={styles['search-section']}>
+
+        <div className={styles['search-input-container']}>
+          <input type="text" placeholder="Search member by email" onChange={(event) => setEmail(event.target.value)} />
+          <button onClick={searchEmail}>
+            Search
+          </button>
         </div>
-        <div>
-          <p>Number of active members</p>
-          {stats.activeMembers}
+
+        {search && (
+          <div className={styles['search-results']}>
+            {users.map((user) => {
+              return (
+                <MemberCard key={user.email} user={user} searchEmail={searchEmail} token={token} />
+              )
+            })}
+          </div>
+        )}
+      </div>
+
+      <div className={styles['stats-grid']}>
+        <div className={styles['stat-card']}>
+          <p>Total Members</p>
+          <h2>{stats.memberCount}</h2>
         </div>
-        <div>
-          <p>Number of inactive members</p>
-          {stats.inactiveMembers}
+
+        <div className={styles['stat-card']}>
+          <p>Active Members</p>
+          <h2>{stats.activeMembers}</h2>
         </div>
-        <div>
-          <p>Expiring soon</p>
-          {stats.expiringSoon}
+
+        <div className={styles['stat-card']}>
+          <p>Inactive Members</p>
+          <h2>{stats.inactiveMembers}</h2>
+        </div>
+
+        <div className={styles['stat-card']}>
+          <p>Trainers</p>
+          <h2>{stats.trainersCount}</h2>
+        </div>
+
+        <div className={styles['stat-card']}>
+          <p>Registrations This Month</p>
+          <h2>{stats.registrationCount}</h2>
+        </div>
+
+        <div className={`${styles['stat-card']} ${styles['warning-card']}`}>
+          <p>Expiring Soon</p>
+          <h2>{stats.expiringSoon}</h2>
+        </div>
+
+      </div>
+
+      <div className={styles['bottom-grid']}>
+        <div className={styles['recent-members-card']}>
+
+          <div className={styles['section-title']}>
+            New Members
+          </div>
+
+          {
+            stats.newMembers.map((member) => {
+              return (
+                <NewMemberCard member={member} />
+              );
+            })
+          }
+        </div>
+
+        <div className={styles['chart-card']}>
+          <PieChart memberCount={stats.memberCount} femaleCount={stats.femaleCount} maleCount={stats.maleCount} />
         </div>
       </div>
+
     </div>
   );
 }

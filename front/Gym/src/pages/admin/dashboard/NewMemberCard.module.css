@@ -1,0 +1,28 @@
+.new-member-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px;
+  border-radius: 18px;
+  background: #111;
+  margin-bottom: 15px;
+  transition: 0.25s ease;
+}
+
+.new-member-card:hover {
+  transform: translateX(4px);
+}
+
+.new-member-card h4 {
+  color: white;
+  margin-bottom: 6px;
+}
+
+.new-member-card p {
+  color: #aaa;
+}
+
+.new-member-card span {
+  color: #ffb300;
+  font-size: 14px;
+}

@@ -40,9 +40,10 @@ async function getStats(req, res) {
 
   const today = new Date();
   const nextWeek = new Date();
+  const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
   nextWeek.setDate(nextWeek.getDate() + 7);
 
-  const [memberCount, activeMembers, expiringSoon] = await Promise.all([
+  const [memberCount, activeMembers, expiringSoon, maleCount, registrationCount, newMembers, trainersCount] = await Promise.all([
     User.countDocuments({ role: 'member' }),
     User.countDocuments({
       role: 'member',
@@ -54,12 +55,37 @@ async function getStats(req, res) {
         $gt: today,
         $lt: nextWeek
       }
+    }),
+    User.countDocuments({
+      role: 'member',
+      gender: 'man'
+    }),
+    User.countDocuments({
+      role: 'member',
+      createdAt: {
+        $gte: firstDayOfMonth
+      }
+    }),
+    User.find({role: 'member'}).sort({createdAt: -1}).limit(5),
+    User.countDocuments({
+      role: 'trainer'
     })
   ]);
 
+  const femaleCount = memberCount - maleCount;
   const inactiveMembers = memberCount - activeMembers;
 
-  res.status(StatusCodes.OK).json({ memberCount, activeMembers, inactiveMembers, expiringSoon });
+  res.status(StatusCodes.OK).json({ 
+    memberCount, 
+    activeMembers,
+     inactiveMembers, 
+     expiringSoon, 
+     maleCount, 
+     femaleCount,
+     registrationCount,
+     newMembers,
+     trainersCount
+     });
 }
 
 export {
