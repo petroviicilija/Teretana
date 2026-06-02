@@ -6,9 +6,11 @@ import { MemberCard } from './MemberCard.jsx';
 import { NewMemberCard } from './NewMemberCard.jsx';
 import { PieChart } from './PieChart.jsx';
 
-export function AdminDashboard() {
+//New Member Card is used for new memebers and members whose memmbership expire soon
+//Dodati View all za members members whose memmbership expire soon tj. jos jednu stranicu
+//Pagination za users 
 
-  //Dodati middle gird za Members whose membership will soon expire
+export function AdminDashboard() {
 
   const [stats, setStats] = useState();
   const [email, setEmail] = useState('');
@@ -110,8 +112,23 @@ export function AdminDashboard() {
 
         <div className={`${styles['stat-card']} ${styles['warning-card']}`}>
           <p>Expiring Soon</p>
-          <h2>{stats.expiringSoon}</h2>
+          <h2>{stats.expiringSoon.length}</h2>
         </div>
+
+      </div>
+
+      <div className={styles['middle-grid']}>
+        <div className={styles['title']}>
+          Members whose membership will soon expire
+        </div>  
+
+        {
+          stats.expiringSoon.map((member) => {
+            return (
+              <NewMemberCard key={member.email} member={member} forNewMembers={false} />
+            )
+          })
+        }
 
       </div>
 
@@ -125,7 +142,7 @@ export function AdminDashboard() {
           {
             stats.newMembers.map((member) => {
               return (
-                <NewMemberCard member={member} />
+                <NewMemberCard key={member.email} member={member} forNewMembers={true} />
               );
             })
           }

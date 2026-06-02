@@ -1,6 +1,7 @@
 import styles from './AdminUsers.module.css';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Pagination } from '../../../components/Pagination.jsx';
 import { useOutletContext } from "react-router";
 import { UserCard } from './UserCard.jsx';
 
@@ -68,11 +69,7 @@ export function AdminUsers() {
       </div>
 
       <div className={styles['page-buttons-container']}>
-        {
-          Array.from({ length: totalPages }, (_, index) => (
-            <button key={index} className={styles['page-button']} onClick={() => setPage(index + 1)}>{index + 1}</button>
-          ))
-        }
+        <Pagination page={page} totalPages={totalPages} setPage={setPage} />
       </div>
     </div>
   );

@@ -115,12 +115,20 @@
 }
 
 .recent-members-card,
-.chart-card {
+.chart-card, .middle-grid {
   background: rgba(20, 20, 20, 0.95);
   border: 1px solid rgba(255, 179, 0, 0.18);
   border-radius: 28px;
   padding: 30px;
-  margin-bottom: 30px;
+}
+
+.recent-members-card,
+.chart-card{
+  margin-bottom: 35px;
+}
+
+.middle-grid{
+  margin-bottom: 35px;
 }
 
 .chart-card{
@@ -128,7 +136,7 @@
   align-items: center;
 }
 
-.section-title {
+.section-title, .middle-grid .title {
   color: white;
   font-size: 24px;
   font-weight: bold;

@@ -8,6 +8,13 @@ export function NavBar({ user, collapsed, setCollapsed }) {
 
   const navigate = useNavigate();
 
+  function logOut(){
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+
+    navigate('/');
+  }
+
   return (
     <nav className={`${styles['nav-bar']} ${collapsed ? styles['collapsed'] : ''}`} >
       <button className={styles['menu-btn']} onClick={() => setCollapsed(!collapsed)}>
@@ -23,8 +30,9 @@ export function NavBar({ user, collapsed, setCollapsed }) {
         <button onClick={() => navigate('/admin')}>DashBoard</button>
         <button onClick={() => navigate('users')}>Users</button>
         <button onClick={() => navigate('createUser')} >Create User</button>
+        <button onClick={logOut}>Log Out</button>
       </div>
-      <img src={Logo} className={styles['logo-img']} />
+        <img src={Logo} className={styles['logo-img']} />
     </nav>
   );
 }

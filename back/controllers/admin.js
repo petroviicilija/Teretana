@@ -26,6 +26,18 @@ async function getAllUsers(req, res) {
 
   const totalUsers = await User.countDocuments(queryObject);
   const totalPages = Math.ceil(totalUsers / limit);
+  let representingPages;
+  let firstPage;
+  let lastPage;
+
+  totalPages > 5 ? representingPages = 6 : representingPages = totalPages;
+  if (page >= 4 && totalPages > 5) {
+    firstPage = page - 2;
+    lastPage = page + 2;
+  } else {
+    firstPage = 1;
+    lastPage = totalPages;
+  }
 
   const users = await User.find(queryObject).select('-__v').skip(skip).limit(limit);
   res.status(StatusCodes.OK).json({ users, totalPages, currentPage: Number(page) });
@@ -49,13 +61,13 @@ async function getStats(req, res) {
       role: 'member',
       'memberData.membershipEnd': { $gt: today }
     }),
-    User.countDocuments({
+    User.find({
       role: 'member',
       'memberData.membershipEnd': {
         $gt: today,
         $lt: nextWeek
       }
-    }),
+    }).select('-__v').limit(5),
     User.countDocuments({
       role: 'member',
       gender: 'man'
@@ -66,7 +78,7 @@ async function getStats(req, res) {
         $gte: firstDayOfMonth
       }
     }),
-    User.find({role: 'member'}).sort({createdAt: -1}).limit(5),
+    User.find({ role: 'member' }).select('-__v').sort({ createdAt: -1 }).limit(5),
     User.countDocuments({
       role: 'trainer'
     })
@@ -75,17 +87,17 @@ async function getStats(req, res) {
   const femaleCount = memberCount - maleCount;
   const inactiveMembers = memberCount - activeMembers;
 
-  res.status(StatusCodes.OK).json({ 
-    memberCount, 
+  res.status(StatusCodes.OK).json({
+    memberCount,
     activeMembers,
-     inactiveMembers, 
-     expiringSoon, 
-     maleCount, 
-     femaleCount,
-     registrationCount,
-     newMembers,
-     trainersCount
-     });
+    inactiveMembers,
+    expiringSoon,
+    maleCount,
+    femaleCount,
+    registrationCount,
+    newMembers,
+    trainersCount
+  });
 }
 
 export {
