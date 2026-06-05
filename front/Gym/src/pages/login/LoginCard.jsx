@@ -52,7 +52,7 @@ export function LoginCard() {
       const roleRoutes = {
         admin: '/admin',
         trainer: '/trainer',
-        member: '/member'
+        member: `/member`
       };
 
       navigate(roleRoutes[user.role]);
@@ -60,41 +60,21 @@ export function LoginCard() {
     } catch (error) {
       console.log(error);
     }
-
-    setEmailText('');
-    setPasswordText('');
   }
   return (
     <div className={styles['login-card']}>
       <img src={Logo} className={styles['logo']} />
-
       <h1>Welcome Back</h1>
       <p className={styles["subtitle"]}>Enter your credentials</p>
-
-      <input
-        type="text"
-        placeholder="Email"
-        className={`${styles['email-input']} ${emailError ? styles['input-error'] : ''}`}
-        onChange={saveInputEmail}
-      />
-
+      <input type="text" placeholder="Email" className={`${styles['email-input']} ${emailError ? styles['input-error'] : ''}`} onChange={saveInputEmail} />
+      
       {emailError && <p className={styles["error-text"]}>Email is required</p>}
 
-      <input
-        type="password"
-        placeholder="Password"
-        className={`${styles['password-input']} ${passwordError ? styles['input-error'] : ''}`}
-        onChange={saveInputPassword}
-      />
-
+      <input type="password" placeholder="Password" className={`${styles['password-input']} ${passwordError ? styles['input-error'] : ''}`} onChange={saveInputPassword} />
+      
       {passwordError && <p className={styles["error-text"]}>Password is required</p>}
-
-      <button
-        className={styles["login-button"]}
-        onClick={submitLoginInfo}
-      >
-        Login
-      </button>
+      
+      <button className={styles["login-button"]} onClick={submitLoginInfo} >Login</button>
     </div>
   );
 }

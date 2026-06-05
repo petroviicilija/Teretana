@@ -23,7 +23,6 @@ async function getAllUsers(req, res) {
     ];
   }
 
-
   const totalUsers = await User.countDocuments(queryObject);
   const totalPages = Math.ceil(totalUsers / limit);
   let representingPages;
@@ -41,6 +40,31 @@ async function getAllUsers(req, res) {
 
   const users = await User.find(queryObject).select('-__v').skip(skip).limit(limit);
   res.status(StatusCodes.OK).json({ users, totalPages, currentPage: Number(page) });
+}
+
+async function getUser(req, res) {
+  const userId = req.params.id;
+  const user = await User.findById({ _id: userId }).select('-__v');
+
+  if (!user) {
+    throw new NotFoundError(`User with id:${userId} does not exist`)
+  }
+
+  res.status(StatusCodes.OK).json(user);
+}
+
+async function updateUser(req, res) {
+  const userId = req.params.id;
+  const user = await User.findByIdAndUpdate({ _id: userId }, req.body, {
+    returnDocument: 'after',
+    runValidators: true
+  }).select('-__v');
+
+  if (!user) {
+    throw new NotFoundError(`User with id:${userId} does not exist`)
+  }
+
+  res.status(StatusCodes.OK).json(user);
 }
 
 async function createUser(req, res) {
@@ -103,5 +127,7 @@ async function getStats(req, res) {
 export {
   getAllUsers,
   createUser,
-  getStats
+  getStats,
+  updateUser,
+  getUser
 }

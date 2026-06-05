@@ -3,7 +3,7 @@ import { UnauthenticatedError } from "../errors/index.js";
 
 const auth = async (req, res, next) => {
   const authHeader = req.headers.authorization;
-  if(!authHeader || !authHeader.startsWith('Bearer')){
+  if (!authHeader || !authHeader.startsWith('Bearer')) {
     throw new UnauthenticatedError('Authentication invalid');
   }
 
@@ -11,7 +11,7 @@ const auth = async (req, res, next) => {
 
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = { name: payload.name, role:payload.role };
+    req.user = { name: payload.name, role: payload.role, userId: payload.userId };
     next();
   } catch (error) {
     throw new UnauthenticatedError('Authentication invalid');

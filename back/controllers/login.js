@@ -5,7 +5,7 @@ import { BadRequestError, NotFoundError, UnauthenticatedError } from "../errors/
 async function login(req, res) {
   const { email, password } = req.body;
   if (!email || !password) {
-    throw new BadRequestError('Please provide email and name!');
+    throw new BadRequestError('Please provide email and password!');
   }
 
   const user = await User.findOne({ email: email }).select('+password');
@@ -20,7 +20,7 @@ async function login(req, res) {
 
   const token = user.createJWT();
 
-  res.status(StatusCodes.OK).json({ user: { name: user.firstName, role: user.role, gender: user.gender}, token });
+  res.status(StatusCodes.OK).json({ user: { name: user.firstName, role: user.role, gender: user.gender, id: user._id }, token });
 }
 
 export {

@@ -8,7 +8,7 @@ export function NavBar({ user, collapsed, setCollapsed }) {
 
   const navigate = useNavigate();
 
-  function logOut(){
+  function logOut() {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
 
@@ -27,12 +27,23 @@ export function NavBar({ user, collapsed, setCollapsed }) {
         </div>
       )}
       <div className={styles['nav-links']}>
-        <button onClick={() => navigate('/admin')}>DashBoard</button>
-        <button onClick={() => navigate('users')}>Users</button>
-        <button onClick={() => navigate('createUser')} >Create User</button>
+        {user.role === 'admin' &&
+          <>
+            <button onClick={() => navigate('/admin')}>DashBoard</button>
+            <button onClick={() => navigate('users')}>Users</button>
+            <button onClick={() => navigate('createUser')} >Create User</button>
+          </>
+        }
+        {user.role === 'member' &&
+          <>
+            <button onClick={() => navigate(`/member/`)}>DashBoard</button>
+            <button onClick={() => navigate(`profile`)}>My Profile</button>
+            <button onClick={() => navigate('training')} >My Trainings</button>
+          </>
+        }
         <button onClick={logOut}>Log Out</button>
       </div>
-        <img src={Logo} className={styles['logo-img']} />
+      <img src={Logo} className={styles['logo-img']} />
     </nav>
   );
 }
