@@ -81,6 +81,31 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   flex-direction: column;
   gap: 20px;
 }
+.client-trainer-card{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px;
+  border-radius: 18px;
+  background: #111;
+  margin-bottom: 15px;
+  transition: 0.25s ease;
+}
+.client-trainer-card h4 {
+  color: white;
+  margin-bottom: 6px;
+}
+.client-trainer-card p {
+  color: #aaa;
+}
+.client-trainer-card:hover {
+  transform: translateX(4px);
+}
+.trainer-info{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
 /*Message*/
 .success-message {

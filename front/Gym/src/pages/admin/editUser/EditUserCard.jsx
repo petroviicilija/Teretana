@@ -121,8 +121,22 @@ export function EditUserCard({ user, token, userId }) {
       </div>
 
       <div className={styles['extra-section']}>
-        {role === 'member' && <MemberData dateStart={dateStart} setDateStart={setDateStart} dateEnd={dateEnd} setDateEnd={setDateEnd} />}
-        {role === 'trainer' && <TrainerData price={price} specialization={specialization} setPrice={setPrice} setSpecialization={setSpecialization} />}
+        {role === 'member' && <MemberData
+          dateStart={dateStart}
+          setDateStart={setDateStart}
+          dateEnd={dateEnd}
+          setDateEnd={setDateEnd}
+          assignedTrainer={user?.memberData?.assignedTrainer}
+          memberName={user.firstName}
+          memberId={user._id}
+        />}
+        {role === 'trainer' && <TrainerData 
+        assignedMembers={user?.trainerData.assignedMembers} 
+        price={price} 
+        specialization={specialization} 
+        setPrice={setPrice} 
+        setSpecialization={setSpecialization} 
+        />}
       </div>
 
       {successMessage && (<div className={styles['success-message']}> {successMessage} </div>)}

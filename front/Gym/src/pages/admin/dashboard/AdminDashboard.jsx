@@ -8,7 +8,6 @@ import { PieChart } from './PieChart.jsx';
 
 //New Member Card is used for new memebers and members whose memmbership expire soon
 //Dodati View all za members members whose memmbership expire soon tj. jos jednu stranicu
-//Pagination za users 
 
 export function AdminDashboard() {
 
@@ -149,6 +148,9 @@ export function AdminDashboard() {
         </div>
 
         <div className={styles['chart-card']}>
+          <div className={styles['section-title']}>
+            Male-to-female ratio
+          </div>
           <PieChart memberCount={stats.memberCount} femaleCount={stats.femaleCount} maleCount={stats.maleCount} />
         </div>
       </div>

@@ -10,44 +10,37 @@ export function MemberTraining() {
   const [trainers, setTrainers] = useState();
 
   async function getMemberInfo() {
-    const res = await axios.get(`/api/v1/member`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
+    try {
+      const res = await axios.get(`/api/v1/member`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
 
-    setMemberInfo(res.data);
+      setMemberInfo(res.data);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async function getTrainers() {
-    const res = await axios.get(`/api/v1/member/trainers`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
+    try {
+      const res = await axios.get(`/api/v1/member/trainers`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
 
-    setTrainers(res.data);
+      setTrainers(res.data);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   useEffect(() => {
     getMemberInfo();
     getTrainers();
   }, []);
-
-  async function assignTrainer(trainerId) {
-    try {
-      await axios.patch('/api/v1/member/assign-trainer', {
-        trainerId
-      }, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-      getMemberInfo();
-    } catch (error) {
-      console.log(error)
-    }
-  }
 
   if (!memberInfo || !trainers) return;
 
@@ -56,7 +49,6 @@ export function MemberTraining() {
       {memberInfo.memberData.assignedTrainer ?
         <div>
           Your assigned trainer is {memberInfo.memberData.assignedTrainer.firstName} {memberInfo.memberData.assignedTrainer.lastName}
-          <button onClick={() => assignTrainer(null)}>Remove him</button>
         </div>
         :
         <>
@@ -65,7 +57,7 @@ export function MemberTraining() {
             Here are our trainers
             {trainers.map((trainer) => (
               <div className={styles['trainer-card']}>
-                {trainer.firstName} <button onClick={() => assignTrainer(trainer.id)}>Assign this Trainer</button>
+                {trainer.firstName}
               </div>
             ))}
           </div>

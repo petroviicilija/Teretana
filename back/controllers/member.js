@@ -15,6 +15,7 @@ async function getAllTrainers(req, res) {
   res.status(StatusCodes.OK).json(trainers);
 }
 
+//Vrv treba obrisati getTrainer
 async function getTrainer(req, res) {
   const trainerId = req.params.id;
   const trainer = await User.findById(trainerId).select('-__v');
@@ -60,25 +61,9 @@ async function updateMember(req, res) {
   res.status(StatusCodes.OK).json(member);
 }
 
-async function assignTrainer(req, res) {
-  const { trainerId } = req.body;
-
-  const updatePayload = trainerId === null ?
-    { $unset: { 'memberData.assignedTrainer': 1 } }
-    : { 'memberData.assignedTrainer': trainerId }
-
-  await User.findByIdAndUpdate(req.user.userId, updatePayload, {
-    returnDocument: 'after',
-    runValidators: true
-  }).select('-__v');
-
-  res.status(StatusCodes.OK).json({ msg: 'Trainer assigned' })
-}
-
 export {
   getAllTrainers,
   getTrainer,
   updateMember,
-  getMember,
-  assignTrainer
+  getMember
 }

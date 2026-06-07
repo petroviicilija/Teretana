@@ -1,8 +1,7 @@
 import './App.css';
 import { Routes, Route } from 'react-router';
 import { LoginPage } from './pages/login/LoginPage.jsx';
-import { AdminLayout, AdminDashboard, AdminUsers, AdminCreate } from './pages/admin/index.js';
-import { EditUserPage } from './pages/editUser/EditUserPage.jsx';
+import { AdminLayout, AdminDashboard, AdminUsers, AdminCreate, AssignTrainerPage, EditUserPage } from './pages/admin/index.js';
 import { MemberLayout, MemberDashboard, MemberProfile, MemberTraining } from './pages/member/index.js';
 import { TrainerPage } from './pages/trainer/TrainerPage.jsx';
 
@@ -17,6 +16,7 @@ function App() {
           <Route path='users' element={<AdminUsers />} />
           <Route path='createUser' element={<AdminCreate />} />
           <Route path='editUser/:userId' element={<EditUserPage />} />
+          <Route path='assignTrainer/:memberId' element={<AssignTrainerPage />} />
         </Route>
         <Route path='/member' element={<MemberLayout />}>
           <Route index element={<MemberDashboard />} />

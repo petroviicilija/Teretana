@@ -42,12 +42,36 @@ async function getAllUsers(req, res) {
   res.status(StatusCodes.OK).json({ users, totalPages, currentPage: Number(page) });
 }
 
+async function getAllTrainers(req, res) {
+  const Alltrainers = await User.find({ role: 'trainer' }).sort({ firstName: 1, lastName: 1 }).select('-__v');
+  const trainers = Alltrainers.map((trainer) => ({
+    firstName: trainer.firstName,
+    lastName: trainer.lastName,
+    email: trainer.email,
+    id: trainer._id
+  }));
+
+  res.status(StatusCodes.OK).json(trainers);
+}
+
 async function getUser(req, res) {
   const userId = req.params.id;
   const user = await User.findById({ _id: userId }).select('-__v');
 
   if (!user) {
     throw new NotFoundError(`User with id:${userId} does not exist`)
+  }
+
+  if (user.role === 'member') {
+    await user.populate(
+      'memberData.assignedTrainer',
+      'firstName lastName email trainerData.specialization trainerData.hourlyRate'
+    )
+  } else if (user.role === 'trainer'){
+    await user.populate(
+      'trainerData.assignedMembers',
+      'firstName lastName email'
+    )
   }
 
   res.status(StatusCodes.OK).json(user);
@@ -65,6 +89,71 @@ async function updateUser(req, res) {
   }
 
   res.status(StatusCodes.OK).json(user);
+}
+
+async function assignTrainer(req, res) {
+
+  const { memberId, trainerId } = req.body;
+
+  const member = await User.findOne({ _id: memberId, role: 'member' });
+  const trainer = await User.findOne({ _id: trainerId, role: 'trainer' });
+
+  if (!member || !trainer) {
+    throw new NotFoundError('Trainer or member does not exist.');
+  }
+  if (member.memberData?.assignedTrainer) {
+    throw new BadRequestError('Member already has an assigned trainer.');
+  }
+
+  await Promise.all([
+    User.findByIdAndUpdate(memberId, {
+      'memberData.assignedTrainer': trainerId
+    }, {
+      returnDocument: 'after',
+      runValidators: true
+    }).select('-__v'),
+    User.findByIdAndUpdate(trainerId, {
+      $addToSet: {
+        'trainerData.assignedMembers': memberId
+      }
+    }, {
+      returnDocument: 'after',
+      runValidators: true
+    }).select('-__v')
+  ]);
+
+  res.status(StatusCodes.OK).json({ msg: 'Trainer assigned.' });
+}
+
+async function removeTrainer(req, res) {
+  const { memberId, trainerId } = req.body;
+
+  const member = await User.findOne({ _id: memberId, role: 'member' });
+  const trainer = await User.findOne({ _id: trainerId, role: 'trainer' });
+
+  if (!member || !trainer) {
+    throw new NotFoundError('Trainer or member does not exist.');
+  }
+  if (!member.memberData?.assignedTrainer) {
+    throw new BadRequestError('Member does not have assigned trainer.');
+  }
+
+  await Promise.all([
+    User.findByIdAndUpdate(memberId, {
+      $unset: { 'memberData.assignedTrainer': 1 }
+    }, {
+      returnDocument: 'after',
+      runValidators: true
+    }).select('-__v'),
+    User.findByIdAndUpdate(trainerId, {
+      $pull: { 'trainerData.assignedMembers': memberId }
+    }, {
+      returnDocument: 'after',
+      runValidators: true
+    }).select('-__v')
+  ]);
+
+  res.status(StatusCodes.OK).json({ msg: 'Trainer succesfully removed.' })
 }
 
 async function createUser(req, res) {
@@ -126,8 +215,11 @@ async function getStats(req, res) {
 
 export {
   getAllUsers,
+  getAllTrainers,
   createUser,
   getStats,
   updateUser,
-  getUser
+  getUser,
+  assignTrainer,
+  removeTrainer
 }

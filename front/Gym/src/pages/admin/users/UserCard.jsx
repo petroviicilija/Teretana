@@ -56,7 +56,8 @@ export function UserCard({ user, token, getUsers }) {
             </div>
             <div>
               <span>Status</span>
-              {user.memberData?.isActive ? <p className={styles['active-status']}>Active</p> : <p className={styles['not-active-status']}>Not Active</p>}
+              {user.memberData?.isActive ? 
+              <p className={styles['active-status']}>Active</p> : <p className={styles['not-active-status']}>Not Active</p>}
             </div>
           </>
         )}
@@ -77,6 +78,7 @@ export function UserCard({ user, token, getUsers }) {
       </div>
 
       <div className={styles['button-container']}>
+        {user.role === 'member' && <button onClick={() => navigate(`../assignTrainer/${user._id}`)}>Assign trainer</button>}
         <img src={EditButton} className={styles['edit-button']} onClick={() => navigate(`../editUser/${user._id}`)} />
         <img src={DeleteButton} className={styles['delete-button']} onClick={deleteUser} />
       </div>
