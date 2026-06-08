@@ -1,0 +1,100 @@
+.trainings-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  gap: 24px;
+}
+
+/*Training card*/
+
+.training-card {
+  display: flex;
+  flex-direction: column;
+  background: rgba(20, 20, 20, 0.95);
+  border: 1px solid rgba(255, 179, 0, 0.18);
+  border-radius: 28px;
+  padding: 30px;
+  margin-bottom: 25px;
+  transition: 0.25s ease;
+}
+
+.training-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(255, 179, 0, 0.12);
+}
+
+/* Header */
+
+.header-section {
+  margin-bottom: 25px;
+}
+
+.header-section h2 {
+  color: white;
+  font-size: 28px;
+}
+
+/* Exercises */
+
+.exercise-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.exercise-row {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  background: #111;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.exercise-number {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #ffcc00, #ff8800);
+  color: black;
+  font-weight: bold;
+  margin-right: 18px;
+}
+
+.exercise-info h4 {
+  color: white;
+  margin-bottom: 5px;
+  font-size: 17px;
+}
+
+.exercise-info p {
+  color: #aaa;
+  font-size: 14px;
+}
+
+/* Notes */
+
+.notes-section {
+  margin-top: auto;
+  padding: 20px;
+  background: rgba(255, 179, 0, 0.05);
+  border-radius: 18px;
+  border: 1px solid rgba(255, 179, 0, 0.12);
+}
+
+.notes-section span {
+  color: #ffb300;
+  display: block;
+  margin-bottom: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.notes-section p {
+  color: white;
+  line-height: 1.6;
+}

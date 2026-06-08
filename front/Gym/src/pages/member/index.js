@@ -1,11 +1,11 @@
-import { MemberDashboard } from "./dashboard/MemberDashboard.jsx";
+import { MemberDashboardPage } from "./dashboard/MemberDashboardPage.jsx";
 import { MemberLayout } from "./layout/MemberLayout.jsx";
-import { MemberProfile } from "./profile/MemberProfile.jsx";
-import { MemberTraining } from "./training/MemberTraining.jsx";
+import { MemberProfilePage } from "./profile/MemberProfilePage.jsx";
+import { MemberTrainingPage } from "./training/MemberTrainingPage.jsx";
 
 export{
-  MemberDashboard,
+  MemberDashboardPage,
   MemberLayout,
-  MemberProfile,
-  MemberTraining
+  MemberProfilePage,
+  MemberTrainingPage
 }

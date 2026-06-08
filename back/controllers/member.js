@@ -1,6 +1,7 @@
 import { StatusCodes } from 'http-status-codes';
 import { User } from '../models/user.js';
-import { BadRequestError, NotFoundError } from '../errors/index.js';
+import { Training } from '../models/trainingPlan.js';
+import { BadRequestError, NotFoundError, ForbiddenError } from '../errors/index.js';
 
 async function getAllTrainers(req, res) {
   const Alltrainers = await User.find({ role: 'trainer' }).select('-__v');
@@ -61,9 +62,81 @@ async function updateMember(req, res) {
   res.status(StatusCodes.OK).json(member);
 }
 
+//Training controls for member
+
+async function createTraining(req, res) {
+  await Training.create({
+    ...req.body,
+    member: req.user.userId,
+    trainer: null
+  });
+
+  res.status(StatusCodes.OK).json({ msg: 'Training succesfully created.' })
+}
+
+async function getTraining(req, res) {
+  const { userId } = req.user;
+  const trainings = await Training.find({ member: userId }).select('-__v');
+
+  const myTrainings = trainings.filter(training => training.trainer === null);
+  const trainersTrainings = trainings.filter(training => training.trainer !== null);
+
+  res.status(StatusCodes.OK).json({myTrainings, trainersTrainings});
+}
+
+async function deleteTraining(req, res) {
+  const { trainingId } = req.params;
+  const { userId } = req.user;
+
+  const training = await Training.findOne({
+    _id:trainingId,
+    member: userId
+  });
+
+  if (!training) {
+    throw new NotFoundError(`Training with id: ${trainingId} does not exist.`);
+  }
+  if (training.trainer !== null) {
+    throw new ForbiddenError(`Member cannot delete a training that was created by a trainer.`)
+  }
+
+  await Training.findByIdAndDelete(trainingId);
+
+  res.status(StatusCodes.OK).json({ msg: 'Training succesfully deleted.' })
+}
+
+async function updateTraining(req, res) {
+  const { userId } = req.user;
+  const { trainingId, title, notes, exercises } = req.body;
+
+  const training = await Training.findOne({ member: userId, _id: trainingId });
+
+  if (!training) {
+    throw new NotFoundError(`Training with id: ${trainingId} does not exist.`);
+  }
+  if (training.trainer !== null) {
+    throw new ForbiddenError(`Member cannot update a training that was created by a trainer.`)
+  }
+
+  const updatedTraining = await Training.findByIdAndUpdate(trainingId, {
+    title,
+    notes,
+    exercises
+  }, {
+    returnDocument: 'after',
+    runValidators: true
+  }).select('-__v');
+
+  res.status(StatusCodes.OK).json(updatedTraining);
+}
+
 export {
   getAllTrainers,
   getTrainer,
   updateMember,
-  getMember
+  getMember,
+  createTraining,
+  getTraining,
+  deleteTraining,
+  updateTraining
 }

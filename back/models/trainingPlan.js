@@ -12,7 +12,8 @@ const trainingPlanSchema = new mongoose.Schema({
     default: null
   },
   title: {
-    type: String
+    type: String,
+    required: true
   },
   notes: {
     type: String
@@ -24,10 +25,12 @@ const trainingPlanSchema = new mongoose.Schema({
         required: true
       },
       sets: {
-        type: Number
+        type: Number,
+        required: true
       },
       reps: {
-        type: Number
+        type: Number,
+        required: true
       },
       weight: {
         type: Number
