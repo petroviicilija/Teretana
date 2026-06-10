@@ -38,7 +38,7 @@ export function NavBar({ user, collapsed, setCollapsed }) {
           <>
             <button onClick={() => navigate(`/member/`)}>DashBoard</button>
             <button onClick={() => navigate(`profile`)}>My Profile</button>
-            <button onClick={() => navigate('training')} >My Trainings</button>
+            <button onClick={() => navigate('trainings')} >My Trainings</button>
           </>
         }
         <button onClick={logOut}>Log Out</button>

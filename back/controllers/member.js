@@ -8,6 +8,7 @@ async function getAllTrainers(req, res) {
   const trainers = Alltrainers.map((trainer) => ({
     firstName: trainer.firstName,
     lastName: trainer.lastName,
+    email: trainer.email,
     specialization: trainer.trainerData.specialization,
     hourlyRate: trainer.trainerData.hourlyRate,
     id: trainer._id
@@ -65,6 +66,7 @@ async function updateMember(req, res) {
 //Training controls for member
 
 async function createTraining(req, res) {
+
   await Training.create({
     ...req.body,
     member: req.user.userId,
@@ -74,7 +76,7 @@ async function createTraining(req, res) {
   res.status(StatusCodes.OK).json({ msg: 'Training succesfully created.' })
 }
 
-async function getTraining(req, res) {
+async function getTrainings(req, res) {
   const { userId } = req.user;
   const trainings = await Training.find({ member: userId }).select('-__v');
 
@@ -82,6 +84,18 @@ async function getTraining(req, res) {
   const trainersTrainings = trainings.filter(training => training.trainer !== null);
 
   res.status(StatusCodes.OK).json({myTrainings, trainersTrainings});
+}
+
+async function getOneTraining(req, res) {
+  const { userId } = req.user;
+  const { trainingId } = req.params;
+
+  const training = await Training.findOne({ member: userId, _id: trainingId, trainer: null}).select('-__v');
+  if(!training){
+    throw new NotFoundError(`Training with id ${trainingId} does not exist.`)
+  }
+  
+  res.status(StatusCodes.OK).json(training);
 }
 
 async function deleteTraining(req, res) {
@@ -107,7 +121,8 @@ async function deleteTraining(req, res) {
 
 async function updateTraining(req, res) {
   const { userId } = req.user;
-  const { trainingId, title, notes, exercises } = req.body;
+  const { trainingId } = req.params;
+  const { title, notes, exercises } = req.body;
 
   const training = await Training.findOne({ member: userId, _id: trainingId });
 
@@ -136,7 +151,8 @@ export {
   updateMember,
   getMember,
   createTraining,
-  getTraining,
+  getTrainings,
   deleteTraining,
-  updateTraining
+  updateTraining,
+  getOneTraining
 }

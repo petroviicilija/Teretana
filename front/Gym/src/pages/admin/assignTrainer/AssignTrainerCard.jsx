@@ -59,7 +59,7 @@ export function AssignTrainerCard({ member, trainers, getMember, token }) {
               </h4>
               <p>{member.memberData.assignedTrainer.email}</p>
             </div>
-            <button className={styles['primary-btn']} onClick={() => removeTrainer(member.memberData.assignedTrainer.id)}>Remove trainer</button>
+            <button className={styles['primary-btn']} onClick={() => removeTrainer(member.memberData.assignedTrainer.id)}>Unassign trainer</button>
           </div>
         </>
         :

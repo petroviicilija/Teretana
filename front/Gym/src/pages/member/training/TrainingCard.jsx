@@ -1,6 +1,24 @@
+import { useNavigate } from 'react-router';
 import styles from './MemberTrainingPage.module.css';
+import axios from 'axios';
 
-export function TrainingCard({ trainings }) {
+export function TrainingCard({ trainings, token, getTrainings }) {
+
+  const navigate = useNavigate();
+
+  async function deleteTraining(trainingId) {
+
+    try {
+      await axios.delete(`/api/v1/member/training/${trainingId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      getTrainings();
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   if (!trainings) return;
 
@@ -30,6 +48,10 @@ export function TrainingCard({ trainings }) {
               <p>{training.notes}</p>
             </div>
           )}
+          <div className={styles['buttons-container']}>
+            <button className={styles['primary-btn']} onClick={() => navigate(`../updateTraining/${training._id}`)}>Update training</button>
+            <button className={styles['primary-btn']} onClick={() => deleteTraining(training._id)}>Remove training</button>
+          </div>
         </div>
       ))}
     </>

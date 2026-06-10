@@ -78,7 +78,7 @@ export function UserCard({ user, token, getUsers }) {
       </div>
 
       <div className={styles['button-container']}>
-        {user.role === 'member' && <button onClick={() => navigate(`../assignTrainer/${user._id}`)}>Assign trainer</button>}
+        {user.role === 'member' && <button onClick={() => navigate(`../assignTrainer/${user._id}`)}>{user?.memberData.assignedTrainer ? 'Unassign Trainer' : 'Assign Trainer'}</button>}
         <img src={EditButton} className={styles['edit-button']} onClick={() => navigate(`../editUser/${user._id}`)} />
         <img src={DeleteButton} className={styles['delete-button']} onClick={deleteUser} />
       </div>
