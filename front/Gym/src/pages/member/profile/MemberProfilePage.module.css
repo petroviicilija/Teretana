@@ -18,7 +18,6 @@
 .profile-page {
   min-height: 100vh;
   padding: 40px;
-  background: radial-gradient(circle at top, #1a1a1a 0%, #000 70%);
 }
 
 .profile-grid {
@@ -35,6 +34,8 @@
   border-radius: 28px;
   padding: 30px;
   transition: 0.25s ease;
+  display: flex;
+  flex-direction: column;
 }
 
 .profile-card:hover {
@@ -58,7 +59,8 @@
 }
 
 .input-group label,
-.password-group label {
+.password-group label,
+.membership-info span {
   color: #ffb300;
   margin-bottom: 8px;
   font-size: 14px;
@@ -84,23 +86,8 @@
   box-shadow: 0 0 15px rgba(255,179,0,0.25);
 }
 
-/*Membership info*/
-
-.membership-info {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  height: 100%;
-}
-
-.membership-info span {
-  color: #ffb300;
-  font-size: 13px;
-}
-
-.membership-info p {
-  color: white;
-  margin-top: 6px;
+.profile-card .btn-wrapper{
+  margin-top: auto;
 }
 
 /*Trainer*/
@@ -115,34 +102,6 @@
 
 .trainer-card h4 {
   color: white;
-}
-
-.no-trainer{
-  display:flex;
-  flex-direction:column;
-  gap:15px;
-  margin-top: auto;
-}
-
-/*Button*/
-
-.primary-btn {
-  height: 54px;
-  padding: 0 24px;
-  border: none;
-  border-radius: 16px;
-  background: linear-gradient( 135deg, #ffcc00, #ff8800 );
-  color: black;
-  font-weight: bold;
-  font-size: 16px;
-  cursor: pointer;
-  transition: 0.25s ease;
-  margin-top: auto;
-}
-
-.primary-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 15px rgba(255,179,0,0.25);
 }
 
 /*Status*/
@@ -168,4 +127,73 @@
   font-weight: 600;
   width: fit-content;
   box-shadow: 0 0 12px rgba(255, 107, 107, 0.12);
+}
+
+/*Errors*/
+.bottom-section{
+  display: flex;
+}
+
+.error-text {
+  width: 100%;
+  color: #ff5c5c;
+  font-size: 14px;
+  margin-top: 5px;
+  margin-bottom: 12px;
+  padding-left: 5px;
+}
+
+.input-error {
+  border: 2px solid #ff3b3b !important;
+  box-shadow:
+    0 0 10px rgba(255, 59, 59, 0.5),
+    0 0 20px rgba(255, 59, 59, 0.25);
+  animation: shake 0.25s ease-in-out;
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-4px);
+  }
+
+  50% {
+    transform: translateX(4px);
+  }
+
+  75% {
+    transform: translateX(-4px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.failure{
+  margin-left: 20px;
+  height: 54px;
+  padding: 18px;
+  border-radius: 16px;
+  color: #ff7b7b;
+  background: rgba(255, 80, 80, 0.1);
+  border: 1px solid rgba(255, 80, 80, 0.3);
+  font-weight: 600;
+  text-align: center;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

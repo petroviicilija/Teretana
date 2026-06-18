@@ -2,7 +2,7 @@ import styles from './EditUserPage.module.css';
 import { useState } from 'react';
 import { MemberData } from './MemberData.jsx';
 import { TrainerData } from './TrainerData.jsx';
-import { useNavigate } from 'react-router';
+import { BackButton, PrimaryButton } from '../../../components/index.js';
 import axios from 'axios';
 
 export function EditUserCard({ user, token, userId }) {
@@ -23,8 +23,6 @@ export function EditUserCard({ user, token, userId }) {
   const [specialization, setSpecialization] = useState(user?.trainerData?.specialization);
 
   const [successMessage, setSuccessMessage] = useState('');
-
-  const navigate = useNavigate();
 
   function createPayload() {
 
@@ -52,7 +50,6 @@ export function EditUserCard({ user, token, userId }) {
       gender,
       ...roleMap[role]
     }
-
   }
 
   async function editUser() {
@@ -142,12 +139,8 @@ export function EditUserCard({ user, token, userId }) {
       {successMessage && (<div className={styles['success-message']}> {successMessage} </div>)}
 
       <div className={styles['buttons-container']}>
-        <button className={styles['secondary-btn']} onClick={() => navigate('/admin/users')}>
-          Back
-        </button>
-        <button className={styles['primary-btn']} onClick={editUser}>
-          Edit User
-        </button>
+        <BackButton />
+        <PrimaryButton buttonText={'Edit User'} handleClick={editUser} />
       </div>
     </div>
   );

@@ -25,18 +25,6 @@ async function getAllUsers(req, res) {
 
   const totalUsers = await User.countDocuments(queryObject);
   const totalPages = Math.ceil(totalUsers / limit);
-  let representingPages;
-  let firstPage;
-  let lastPage;
-
-  totalPages > 5 ? representingPages = 6 : representingPages = totalPages;
-  if (page >= 4 && totalPages > 5) {
-    firstPage = page - 2;
-    lastPage = page + 2;
-  } else {
-    firstPage = 1;
-    lastPage = totalPages;
-  }
 
   const users = await User.find(queryObject).select('-__v').skip(skip).limit(limit);
   res.status(StatusCodes.OK).json({ users, totalPages, currentPage: Number(page) });

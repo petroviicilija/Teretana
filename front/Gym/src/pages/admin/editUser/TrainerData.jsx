@@ -1,5 +1,6 @@
 import styles from './EditUserPage.module.css';
 import { useNavigate } from 'react-router';
+import { PrimaryButton } from '../../../components';
 
 export function TrainerData({price, specialization, setPrice, setSpecialization, assignedMembers }) {
 
@@ -30,7 +31,7 @@ export function TrainerData({price, specialization, setPrice, setSpecialization,
                   {assignedMember.email}
                 </p>
               </div>
-              <button className={styles['primary-btn']} onClick={() => navigate(`../assignTrainer/${assignedMember._id}`)} >Unassign Trainer</button>
+              <PrimaryButton buttonText={'Unassign Trainer'} handleClick={() => navigate(`../assignTrainer/${assignedMember._id}`)} />
             </div>
           ))}
         </>

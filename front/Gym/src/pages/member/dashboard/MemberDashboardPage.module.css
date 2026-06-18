@@ -1,0 +1,127 @@
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+/*Header*/
+.page-header {
+  margin-bottom: 35px;
+}
+
+.page-header h1 {
+  color: white;
+  font-size: 42px;
+  margin-bottom: 10px;
+}
+
+.page-header p {
+  color: #aaa;
+}
+
+/*Section title*/
+
+.section-title {
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 25px;
+}
+
+/*Dashboard cards*/
+
+.dashboard-card,
+.membership-card,
+.trainer-card,
+.training-card {
+  background: rgba(20, 20, 20, 0.95);
+  border: 1px solid rgba(255, 179, 0, 0.18);
+  border-radius: 28px;
+  padding: 30px;
+  transition: 0.25s ease;
+}
+
+.dashboard-card:hover,
+.membership-card:hover,
+.trainer-card:hover,
+.training-card:hover{
+  box-shadow: 0 0 20px rgba(255, 179, 0, 0.08);
+}
+
+.membership-card,
+.trainer-card,
+.training-card {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  height: 100%;
+}
+
+.membership-card span,
+.trainer-card span,
+.training-card span {
+  color: #ffb300;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.membership-card p,
+.trainer-card p,
+.training-card p {
+  color: white;
+  margin-top: 6px;
+}
+
+
+.trainer-name p{
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.training-card button{
+  height: 45px;
+  padding: 5px 13px;
+  margin-top: auto;
+  width: 200px;
+}
+
+/*Membership status*/
+
+.active-status {
+  color: #57ff9a;
+  background: rgba(87, 255, 154, 0.12);
+  border: 1px solid rgba(87, 255, 154, 0.35);
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  width: fit-content;
+  box-shadow: 0 0 12px rgba(87, 255, 154, 0.15);
+}
+
+.not-active-status {
+  color: #ff6b6b;
+  background: rgba(255, 107, 107, 0.12);
+  border: 1px solid rgba(255, 107, 107, 0.35);
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  width: fit-content;
+  box-shadow: 0 0 12px rgba(255, 107, 107, 0.12);
+}
+
+/*Role badge*/
+
+.role-badge {
+  display: inline-flex;
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: linear-gradient( 135deg, #ffcc00, #ff8800 );
+  color: black;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-right: 7px;
+}

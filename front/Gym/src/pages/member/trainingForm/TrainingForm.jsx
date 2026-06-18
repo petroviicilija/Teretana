@@ -1,7 +1,7 @@
 import styles from './TrainingForm.module.css';
 import { useState } from 'react';
-import { useNavigate } from 'react-router';
 import DeleteButton from '../../../assets/deleteButton.png';
+import { BackButton, PrimaryButton } from '../../../components';
 
 export function TrainingForm({workoutTitle, 
   setWorkoutTitle, 
@@ -22,8 +22,6 @@ export function TrainingForm({workoutTitle,
   const [reps, setReps] = useState('');
   const [repsError, setRepsError] = useState(false);
   const [weight, setWeight] = useState('');
-
-  const navigate = useNavigate();
 
   function addExercise(exercises, name, sets, reps, weight) {
 
@@ -86,7 +84,7 @@ export function TrainingForm({workoutTitle,
           <label>Exercise Name</label>
           <div className={styles['exercise-header']}>
             <input type="text" className={`${exerciseNameError ? styles['input-error'] : ''}`} value={exerciseName} placeholder="Bench Press" onChange={(event) => setExerciseName(event.target.value)} />
-            <button className={styles['primary-btn']} onClick={() => addExercise(exercises, exerciseName, sets, reps, weight)}>Add Exercise</button>
+            <PrimaryButton buttonText={'Add Exercise'} handleClick={() => addExercise(exercises, exerciseName, sets, reps, weight)} />
           </div>
 
           {exerciseNameError && <p className={styles["error-text"]}>Exercise Name is required</p>}
@@ -133,8 +131,8 @@ export function TrainingForm({workoutTitle,
         {(message && !messageF) && (<div className={styles['message']}> {message} </div>)}
 
         <div className={styles['buttons-container']}>
-          <button className={styles['secondary-btn']} onClick={() => navigate(-1)}>Back</button>
-          <button className={styles['primary-btn']} onClick={() => onSubmit(exercises, workoutTitle, notes)}>{submitText}</button>
+          <BackButton />
+          <PrimaryButton buttonText={submitText} handleClick={() => onSubmit(exercises, workoutTitle, notes)} />
         </div>
       </div>
     </div>

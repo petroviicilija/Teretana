@@ -9,6 +9,7 @@ export function LoginCard() {
   const [emailError, setEmailError] = useState(false);
   const [passwordText, setPasswordText] = useState('');
   const [passwordError, setPasswordError] = useState(false);
+  const [message, setMessage] = useState('');
 
   const navigate = useNavigate();
 
@@ -58,6 +59,11 @@ export function LoginCard() {
       navigate(roleRoutes[user.role]);
 
     } catch (error) {
+      setMessage(error.response.data.msg);
+
+      setTimeout(() => {
+        setMessage('');
+      }, 3000);
       console.log(error);
     }
   }
@@ -65,16 +71,19 @@ export function LoginCard() {
     <div className={styles['login-card']}>
       <img src={Logo} className={styles['logo']} />
       <h1>Welcome Back</h1>
+
       <p className={styles["subtitle"]}>Enter your credentials</p>
+
       <input type="text" placeholder="Email" className={`${styles['email-input']} ${emailError ? styles['input-error'] : ''}`} onChange={saveInputEmail} />
-      
+
       {emailError && <p className={styles["error-text"]}>Email is required</p>}
 
       <input type="password" placeholder="Password" className={`${styles['password-input']} ${passwordError ? styles['input-error'] : ''}`} onChange={saveInputPassword} />
-      
+
       {passwordError && <p className={styles["error-text"]}>Password is required</p>}
-      
+
       <button className={styles["login-button"]} onClick={submitLoginInfo} >Login</button>
+      {message && (<div className={styles['failure']}> {message} </div>)}
     </div>
   );
 }

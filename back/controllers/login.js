@@ -10,12 +10,12 @@ async function login(req, res) {
 
   const user = await User.findOne({ email: email }).select('+password');
   if (!user) {
-    throw new UnauthenticatedError('Invalid Credentials');
+    throw new UnauthenticatedError('User does not exist.');
   }
 
   const isPasswordCorrect = await user.checkPassword(password);
   if (!isPasswordCorrect) {
-    throw new UnauthenticatedError('Invalid Credentials');
+    throw new UnauthenticatedError('Wrong password.');
   }
 
   const token = user.createJWT();

@@ -1,0 +1,23 @@
+.message {
+  margin-top: 30px;
+  padding: 18px;
+  border-radius: 16px;
+  background: rgba(0, 255, 140, 0.1);
+  border: 1px solid rgba(0, 255, 140, 0.3);
+  color: #4cff95;
+  font-weight: 600;
+  text-align: center;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

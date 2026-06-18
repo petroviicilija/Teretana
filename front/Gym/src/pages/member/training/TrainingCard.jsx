@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router';
 import styles from './MemberTrainingPage.module.css';
 import axios from 'axios';
+import { PrimaryButton } from '../../../components';
 
 export function TrainingCard({ trainings, token, getTrainings }) {
 
@@ -49,8 +50,8 @@ export function TrainingCard({ trainings, token, getTrainings }) {
             </div>
           )}
           <div className={styles['buttons-container']}>
-            <button className={styles['primary-btn']} onClick={() => navigate(`../updateTraining/${training._id}`)}>Update training</button>
-            <button className={styles['primary-btn']} onClick={() => deleteTraining(training._id)}>Remove training</button>
+            <PrimaryButton buttonText={'Update training'} handleClick={() => navigate(`../updateTraining/${training._id}`)} />
+            <PrimaryButton buttonText={'Remove training'} handleClick={() => deleteTraining(training._id)} />
           </div>
         </div>
       ))}

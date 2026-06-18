@@ -8,7 +8,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .create-user-page {
   min-height: 100vh;
   padding: 40px;
-  background: radial-gradient(circle at top, #1a1a1a 0%, #000 70%);
   transition: 0.3s ease;
 }
 .create-user-card {
@@ -112,31 +111,4 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   justify-content: flex-end;
   gap: 18px;
   margin-top: 40px;
-}
-.primary-btn,
-.secondary-btn {
-  height: 56px;
-  padding: 0 28px;
-  border: none;
-  border-radius: 16px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.25s ease;
-}
-.primary-btn {
-  background: linear-gradient( 135deg, #ffcc00, #ff8800 );
-  color: black;
-}
-.primary-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 18px rgba(255, 179, 0, 0.35);
-}
-.secondary-btn {
-  background: #1b1b1b;
-  color: white;
-  border: 1px solid rgba(255,255,255,0.1);
-}
-.secondary-btn:hover {
-  background: #2a2a2a;
 }

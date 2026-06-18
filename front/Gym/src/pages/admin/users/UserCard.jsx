@@ -3,6 +3,7 @@ import axios from 'axios';
 import EditButton from '../../../assets/editButton.png';
 import DeleteButton from '../../../assets/deleteButton.png';
 import { useNavigate } from 'react-router';
+import { PrimaryButton } from '../../../components';
 
 export function UserCard({ user, token, getUsers }) {
 
@@ -78,7 +79,9 @@ export function UserCard({ user, token, getUsers }) {
       </div>
 
       <div className={styles['button-container']}>
-        {user.role === 'member' && <button onClick={() => navigate(`../assignTrainer/${user._id}`)}>{user?.memberData.assignedTrainer ? 'Unassign Trainer' : 'Assign Trainer'}</button>}
+        {user.role === 'member' && 
+        <PrimaryButton buttonText={user?.memberData.assignedTrainer ? 'Unassign Trainer' : 'Assign Trainer'} handleClick={() => navigate(`../assignTrainer/${user._id}`)} />
+        }
         <img src={EditButton} className={styles['edit-button']} onClick={() => navigate(`../editUser/${user._id}`)} />
         <img src={DeleteButton} className={styles['delete-button']} onClick={deleteUser} />
       </div>

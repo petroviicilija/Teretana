@@ -1,4 +1,4 @@
-import styles from './MemberTrainingPage.module.css';
+import styles from '../trainers/TrainersPage.module.css';
 
 export function TrainerCard({trainer}) {
   return (

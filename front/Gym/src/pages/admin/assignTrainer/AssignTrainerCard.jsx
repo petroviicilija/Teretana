@@ -1,10 +1,8 @@
 import styles from './AssignTrainerPage.module.css';
 import axios from 'axios';
-import { useNavigate } from 'react-router';
+import { BackButton, PrimaryButton } from '../../../components'
 
 export function AssignTrainerCard({ member, trainers, getMember, token }) {
-
-  const navigate = useNavigate();
 
   async function assignTrainer(trainerId) {
     try {
@@ -59,7 +57,7 @@ export function AssignTrainerCard({ member, trainers, getMember, token }) {
               </h4>
               <p>{member.memberData.assignedTrainer.email}</p>
             </div>
-            <button className={styles['primary-btn']} onClick={() => removeTrainer(member.memberData.assignedTrainer.id)}>Unassign trainer</button>
+            <PrimaryButton buttonText={'Unassign trainer'} handleClick={() => removeTrainer(member.memberData.assignedTrainer.id)} />
           </div>
         </>
         :
@@ -75,12 +73,12 @@ export function AssignTrainerCard({ member, trainers, getMember, token }) {
                 </h4>
                 <p>{trainer.email}</p>
               </div>
-              <button className={styles['primary-btn']} onClick={() => assignTrainer(trainer.id)}>Assign trainer</button>
+              <PrimaryButton buttonText={'Assign trainer'} handleClick={() => assignTrainer(trainer.id)} />
             </div>
           ))}
         </>}
 
-        <button className={styles['secondary-btn']} onClick={() => navigate(-1)}>Back</button>
+          <BackButton />
     </div>
   )
 }

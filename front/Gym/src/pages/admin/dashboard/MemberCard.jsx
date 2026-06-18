@@ -1,5 +1,6 @@
 import styles from './MemberCard.module.css';
 import axios from 'axios';
+import { PrimaryButton } from '../../../components';
 
 export function MemberCard({ user, searchEmail, token }) {
 
@@ -41,7 +42,7 @@ export function MemberCard({ user, searchEmail, token }) {
 
         <div>
           <span>Status</span>
-          { user.memberData.isActive ? <p className={styles['active-status']}>Active</p> : <p className={styles['not-active-status']}>Not Active</p> }
+          {user.memberData.isActive ? <p className={styles['active-status']}>Active</p> : <p className={styles['not-active-status']}>Not Active</p>}
         </div>
 
         <div>
@@ -52,7 +53,9 @@ export function MemberCard({ user, searchEmail, token }) {
         </div>
 
       </div>
-      <button className={styles['renew-button']} onClick={renewMembership} >Renew Membership</button>
+      <div className={styles['btn-container']}>
+        <PrimaryButton buttonText={'Renew Membership'} handleClick={renewMembership} />
+      </div>
     </div>
   );
 }

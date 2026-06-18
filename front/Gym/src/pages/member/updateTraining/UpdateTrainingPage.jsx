@@ -3,6 +3,8 @@ import { useParams, useOutletContext } from 'react-router';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
+//popravi gresku
+
 export function UpdateTrainingPage() {
 
   const [workoutTitle, setWorkoutTitle] = useState('');
@@ -75,8 +77,8 @@ export function UpdateTrainingPage() {
       });
 
       setWorkoutTitle(res.data.title);
-      setExercises(res.data.exercises);
       setNotes(res.data.notes);
+      setExercises(res.data.exercises);
     } catch (error) {
       console.log(error);
     }
@@ -86,7 +88,7 @@ export function UpdateTrainingPage() {
     getTrainigInfo();
   },[]);
 
-  if(!notes) return;
+  if(!exercises) return;
 
   return (
     <>

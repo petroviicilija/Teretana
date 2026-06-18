@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useOutletContext, useNavigate } from 'react-router';
 import { TrainingCard } from './TrainingCard.jsx';
-import { TrainerCard } from './TrainerCard.jsx';
+import { PrimaryButton } from '../../../components';
 import axios from 'axios';
 import styles from './MemberTrainingPage.module.css';
 
@@ -9,7 +9,6 @@ export function MemberTrainingPage() {
 
   const { token } = useOutletContext();
   const [memberInfo, setMemberInfo] = useState();
-  const [trainers, setTrainers] = useState();
   const [myTrainings, setMyTrainings] = useState([]);
   const [trainersTrainings, setTrainersTrainings] = useState([]);
   const navigate = useNavigate();
@@ -23,20 +22,6 @@ export function MemberTrainingPage() {
       });
 
       setMemberInfo(res.data);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async function getTrainers() {
-    try {
-      const res = await axios.get(`/api/v1/member/trainers`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-
-      setTrainers(res.data);
     } catch (error) {
       console.log(error);
     }
@@ -59,11 +44,10 @@ export function MemberTrainingPage() {
 
   useEffect(() => {
     getMemberInfo();
-    getTrainers();
     getTrainings();
   }, []);
 
-  if (!memberInfo || !trainers) return;
+  if (!memberInfo || !myTrainings || !trainersTrainings) return;
 
   return (
     <div className={styles['trainings-page']}>
@@ -73,9 +57,7 @@ export function MemberTrainingPage() {
           <p>Create and manage your workouts</p>
         </div>
 
-        <button className={styles['primary-btn']} onClick={() => navigate('../createTraining')}>
-          + Create Training
-        </button>
+        <PrimaryButton buttonText={'+ Create Training'} handleClick={() => navigate('../createTraining')} />
       </div>
 
 
@@ -111,17 +93,6 @@ export function MemberTrainingPage() {
               You can still create and manage your own training plans,
               or explore our trainers below.
             </p>
-          </div>
-          <div className={styles['trainer-section-subheader']}>
-            <h2>Meet Our Trainers</h2>
-            <p>
-              Browse available trainers and find someone who matches your goals.
-            </p>
-          </div>
-          <div className={styles['trainers-container']}>
-            {trainers.map((trainer) => (
-              <TrainerCard key={trainer.id} trainer={trainer} />
-            ))}
           </div>
         </>
       }

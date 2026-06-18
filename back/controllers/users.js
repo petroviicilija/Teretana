@@ -28,7 +28,7 @@ async function changePassword(req, res) {
 
   const isPasswordCorrect = await user.checkPassword(currentPassword);
   if (!isPasswordCorrect) {
-    throw new UnauthenticatedError('Invalid Credentials');
+    throw new UnauthenticatedError('Incorrect password.');
   }
 
   user.password = newPassword;

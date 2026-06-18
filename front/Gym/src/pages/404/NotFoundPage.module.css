@@ -1,0 +1,61 @@
+.not-found-page {
+  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  background: radial-gradient(circle at top, #1a1a1a 0%, #000 70%);
+}
+
+.not-found-card {
+  width: 100%;
+  max-width: 700px;
+  text-align: center;
+  background: rgba(20, 20, 20, 0.95);
+  border: 2px solid #ffb300;
+  border-radius: 28px;
+  padding: 60px 40px;
+  box-shadow: 0 0 25px rgba(255, 179, 0, 0.18), 0 0 60px rgba(255, 140, 0, 0.08);
+}
+
+.error-code {
+  font-size: 140px;
+  font-weight: 900;
+  line-height: 1;
+  background: linear-gradient(135deg, #ffcc00, #ff8800);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 20px;
+}
+
+.not-found-card h1 {
+  color: white;
+  font-size: 42px;
+  margin-bottom: 16px;
+}
+
+.not-found-card p {
+  color: #aaa;
+  font-size: 17px;
+  line-height: 1.7;
+  margin-bottom: 35px;
+}
+
+.home-button {
+  height: 56px;
+  padding: 0 32px;
+  border: none;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #ffcc00, #ff8800);
+  color: black;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.home-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 18px rgba(255, 179, 0, 0.35);
+}

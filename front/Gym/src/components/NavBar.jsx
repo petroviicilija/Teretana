@@ -15,6 +15,19 @@ export function NavBar({ user, collapsed, setCollapsed }) {
     navigate('/');
   }
 
+  const navItems = {
+    admin: [
+      { label: 'Dashboard', path: '/admin' },
+      { label: 'Users', path: '/admin/users' },
+      { label: 'Create User', path: '/admin/createUser' }
+    ],
+    member: [
+      { label: 'Dashboard', path: '/member' },
+      { label: 'My Profile', path: '/member/profile' },
+      { label: 'My Trainings', path: '/member/trainings' }
+    ]
+  };
+
   return (
     <nav className={`${styles['nav-bar']} ${collapsed ? styles['collapsed'] : ''}`} >
       <button className={styles['menu-btn']} onClick={() => setCollapsed(!collapsed)}>
@@ -27,20 +40,11 @@ export function NavBar({ user, collapsed, setCollapsed }) {
         </div>
       )}
       <div className={styles['nav-links']}>
-        {user.role === 'admin' &&
-          <>
-            <button onClick={() => navigate('/admin')}>DashBoard</button>
-            <button onClick={() => navigate('users')}>Users</button>
-            <button onClick={() => navigate('createUser')} >Create User</button>
-          </>
-        }
-        {user.role === 'member' &&
-          <>
-            <button onClick={() => navigate(`/member/`)}>DashBoard</button>
-            <button onClick={() => navigate(`profile`)}>My Profile</button>
-            <button onClick={() => navigate('trainings')} >My Trainings</button>
-          </>
-        }
+        {navItems[user.role]?.map(item => (
+          <button key={item.path} onClick={() => navigate(item.path)}>
+            {item.label}
+          </button>
+        ))}
         <button onClick={logOut}>Log Out</button>
       </div>
       <img src={Logo} className={styles['logo-img']} />

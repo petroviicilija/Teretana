@@ -2,6 +2,7 @@ import styles from './AdminDashboard.module.css';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useOutletContext } from 'react-router';
+import { PrimaryButton } from '../../../components';
 import { MemberCard } from './MemberCard.jsx';
 import { NewMemberCard } from './NewMemberCard.jsx';
 import { PieChart } from './PieChart.jsx';
@@ -67,9 +68,7 @@ export function AdminDashboard() {
 
         <div className={styles['search-input-container']}>
           <input type="text" placeholder="Search member by email" onChange={(event) => setEmail(event.target.value)} />
-          <button onClick={searchEmail}>
-            Search
-          </button>
+          <PrimaryButton buttonText={'Search'} handleClick={searchEmail} />
         </div>
 
         {search && (

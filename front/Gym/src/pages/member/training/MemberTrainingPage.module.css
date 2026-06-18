@@ -67,7 +67,8 @@
 /* Notes */
 
 .notes-section {
-  margin-top: auto;
+  margin-top: 10px;
+  margin-bottom: 20px;
   padding: 20px;
   background: rgba(255, 179, 0, 0.05);
   border-radius: 18px;
@@ -86,60 +87,6 @@
 .notes-section p {
   color: white;
   line-height: 1.6;
-}
-
-/*Trainer card*/
-.trainers-container{
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  margin-top: 15px;
-}
-.trainer-card {
-  background: rgba(20,20,20,0.95);
-  border: 1px solid rgba(255,179,0,0.18);
-  width: 900px;
-  border-radius: 24px;
-  padding: 28px;
-  display: flex;
-  align-items: center;
-  gap: 30px;
-  transition: 0.25s ease;
-}
-.trainer-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 20px rgba(255,179,0,0.12);
-}
-
-.extra-info {
-  display: flex;
-  gap: 35px;
-  flex-wrap: wrap;
-}
-.extra-info span {
-  color: #ffb300;
-  font-size: 13px;
-  display: block;
-  margin-bottom: 6px;
-}
-.extra-info p {
-  color: white;
-}
-
-.left-section {
-  min-width: 280px;
-}
-.trainer-main-info h2 {
-  color: white;
-  margin-bottom: 8px;
-}
-.trainer-main-info p {
-  color: #aaa;
-}
-
-.right-section{
-  margin-left: auto;
-  margin-right: 30px;
 }
 
 /* Headers */
@@ -204,47 +151,10 @@
   color: #aaa;
 }
 
-.trainer-section-subheader{
-  margin: 20px 25px;
-}
-
 /*Button*/
-
-.primary-btn {
-  height: 54px;
-  padding: 0 24px;
-  border: none;
-  border-radius: 16px;
-  background: linear-gradient( 135deg, #ffcc00, #ff8800 );
-  color: black;
-  font-weight: bold;
-  font-size: 16px;
-  cursor: pointer;
-  transition: 0.25s ease;
-  margin-top: auto;
-}
-
-.primary-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 15px rgba(255,179,0,0.25);
-}
 
 .buttons-container{
   display: flex;
   justify-content: space-between;
-  margin-top: 20px;
-}
-
-.add-button-container{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  background-color: #c3c1c1;
-}
-
-.add-button{
-  height: 60px;
+  margin-top: auto;
 }

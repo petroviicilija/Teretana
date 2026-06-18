@@ -1,5 +1,6 @@
 import styles from './EditUserPage.module.css';
 import { useNavigate } from 'react-router';
+import { PrimaryButton } from '../../../components';
 
 export function MemberData({ dateStart, setDateStart, dateEnd, setDateEnd, assignedTrainer, memberName, memberId }) {
 
@@ -27,7 +28,7 @@ export function MemberData({ dateStart, setDateStart, dateEnd, setDateEnd, assig
                 {assignedTrainer.email}
               </p>
             </div>
-            <button className={styles['primary-btn']} onClick={() => navigate(`../assignTrainer/${memberId}`)}>Unassign Trainer</button>
+            <PrimaryButton buttonText={'Unassign Trainer'} handleClick={() => navigate(`../assignTrainer/${memberId}`)} />
           </div>
         </div>
         :
@@ -35,7 +36,7 @@ export function MemberData({ dateStart, setDateStart, dateEnd, setDateEnd, assig
           <label>Personal trainer</label>
           <div className={styles['trainer-info']}>
             {memberName} does not have a personal trainer
-            <button className={styles['primary-btn']} onClick={() => navigate(`../assignTrainer/${memberId}`)}>Assign trainer</button>
+            <PrimaryButton buttonText={'Assign trainer'} handleClick={() => navigate(`../assignTrainer/${memberId}`)} />
           </div>
         </div>
       }

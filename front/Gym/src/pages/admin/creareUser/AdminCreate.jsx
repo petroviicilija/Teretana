@@ -2,14 +2,13 @@ import { useState } from 'react';
 import styles from './AdminCreate.module.css';
 import { MemberData } from './MemberData.jsx';
 import { TrainerData } from './TrainerData.jsx';
-import { useNavigate, useOutletContext } from 'react-router';
+import { useOutletContext } from 'react-router';
+import { BackButton, PrimaryButton } from '../../../components';
 import axios from 'axios';
 
 export function AdminCreate() {
 
   const { token } = useOutletContext();
-
-  const navigate = useNavigate();
 
   const [successMessage, setSuccessMessage] = useState('');
 
@@ -68,7 +67,6 @@ export function AdminCreate() {
       gender,
       ...roleMap[role]
     }
-
   }
 
   async function createUser() {
@@ -93,7 +91,7 @@ export function AdminCreate() {
       setDateStart('');
       setPrice('');
       setSpecialization('');
-      
+
       setTimeout(() => {
         setSuccessMessage('');
       }, 3000);
@@ -160,12 +158,8 @@ export function AdminCreate() {
         {successMessage && (<div className={styles['success-message']}> {successMessage} </div>)}
 
         <div className={styles['buttons-container']}>
-          <button className={styles['secondary-btn']} onClick={() => navigate('/admin')}>
-            Back
-          </button>
-          <button className={styles['primary-btn']} onClick={createUser}>
-            Create User
-          </button>
+          <BackButton />
+          <PrimaryButton buttonText={'Create User'} handleClick={createUser} />
         </div>
       </div>
     </div>

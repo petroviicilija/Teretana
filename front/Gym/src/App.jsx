@@ -2,8 +2,10 @@ import './App.css';
 import { Routes, Route } from 'react-router';
 import { LoginPage } from './pages/login/LoginPage.jsx';
 import { AdminLayout, AdminDashboard, AdminUsers, AdminCreate, AssignTrainerPage, EditUserPage } from './pages/admin/index.js';
-import { MemberLayout, MemberDashboardPage, MemberProfilePage, MemberTrainingPage, CreateTrainingPage, UpdateTrainingPage } from './pages/member/index.js';
+import { MemberLayout, MemberDashboardPage, MemberProfilePage, MemberTrainingPage, CreateTrainingPage, UpdateTrainingPage, TrainersPage } from './pages/member/index.js';
+import { TrainerLayout } from './pages/trainer/index.js';
 import { TrainerPage } from './pages/trainer/TrainerPage.jsx';
+import { NotFoundPage } from './pages/404/NotFoundPage.jsx';
 
 function App() {
 
@@ -24,8 +26,12 @@ function App() {
           <Route path='trainings' element={<MemberTrainingPage />} />
           <Route path='createTraining' element={<CreateTrainingPage />} />
           <Route path='updateTraining/:trainingId' element={<UpdateTrainingPage />} />
+          <Route path='trainers' element={<TrainersPage />} />
         </Route>
-        <Route path='/trainer' element={<TrainerPage />} />
+        <Route path='/trainer' element={<TrainerLayout />} >
+          <Route index element={<TrainerPage />} />
+        </Route>
+        <Route path='*' element={<NotFoundPage />} />
       </Routes>
     </>
   )

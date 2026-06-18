@@ -4,6 +4,7 @@ import { MemberProfilePage } from "./profile/MemberProfilePage.jsx";
 import { MemberTrainingPage } from "./training/MemberTrainingPage.jsx";
 import { CreateTrainingPage } from "./createTraining/CreateTrainingPage.jsx";
 import { UpdateTrainingPage } from './updateTraining/UpdateTrainingPage.jsx';
+import { TrainersPage } from "./trainers/TrainersPage.jsx";
 
 export{
   MemberDashboardPage,
@@ -11,5 +12,6 @@ export{
   MemberProfilePage,
   MemberTrainingPage,
   CreateTrainingPage,
-  UpdateTrainingPage
+  UpdateTrainingPage,
+  TrainersPage
 }

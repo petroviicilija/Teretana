@@ -1,7 +1,7 @@
 import styles from './AdminUsers.module.css';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Pagination } from '../../../components/Pagination.jsx';
+import { Pagination, PrimaryButton } from '../../../components';
 import { useOutletContext } from "react-router";
 import { UserCard } from './UserCard.jsx';
 
@@ -56,7 +56,7 @@ export function AdminUsers() {
             <option value="trainer">Trainer</option>
             <option value="admin">Admin</option>
           </select>
-          <button onClick={getUsers}>Search</button>
+          <PrimaryButton buttonText={'Search'} handleClick={getUsers} />
         </div>
       </div>
 
