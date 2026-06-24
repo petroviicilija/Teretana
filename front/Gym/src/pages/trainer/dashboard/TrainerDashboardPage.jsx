@@ -13,13 +13,17 @@ export function TrainerDashboardPage() {
   const [stats, setStats] = useState();
 
   async function getStats() {
-    const res = await axios.get(`/api/v1/trainer/stats`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-
-    setStats(res.data);
+    try {
+      const res = await axios.get(`/api/v1/trainer/stats`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+  
+      setStats(res.data);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   useEffect(() => {

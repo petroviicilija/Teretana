@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { useOutletContext, useParams } from 'react-router';
 import axios from 'axios';
 
-//Path za createTraining i naslovi na samoj stranici
 export function TrainerCreateTrainingPage() {
 
   const [workoutTitle, setWorkoutTitle] = useState('');
