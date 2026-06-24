@@ -10,14 +10,17 @@ export function UserCard({ user, token, getUsers }) {
   const navigate = useNavigate();
 
   async function deleteUser() {
+    try {
+      await axios.delete(`/api/v1/admin/${user._id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
 
-    await axios.delete(`/api/v1/admin/${user._id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-
-    getUsers();
+      getUsers();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -57,8 +60,8 @@ export function UserCard({ user, token, getUsers }) {
             </div>
             <div>
               <span>Status</span>
-              {user.memberData?.isActive ? 
-              <p className={styles['active-status']}>Active</p> : <p className={styles['not-active-status']}>Not Active</p>}
+              {user.memberData?.isActive ?
+                <p className={styles['active-status']}>Active</p> : <p className={styles['not-active-status']}>Not Active</p>}
             </div>
           </>
         )}
@@ -79,8 +82,8 @@ export function UserCard({ user, token, getUsers }) {
       </div>
 
       <div className={styles['button-container']}>
-        {user.role === 'member' && 
-        <PrimaryButton buttonText={user?.memberData.assignedTrainer ? 'Unassign Trainer' : 'Assign Trainer'} handleClick={() => navigate(`../assignTrainer/${user._id}`)} />
+        {user.role === 'member' &&
+          <PrimaryButton buttonText={user?.memberData.assignedTrainer ? 'Unassign Trainer' : 'Assign Trainer'} handleClick={() => navigate(`../assignTrainer/${user._id}`)} />
         }
         <img src={EditButton} className={styles['edit-button']} onClick={() => navigate(`../editUser/${user._id}`)} />
         <img src={DeleteButton} className={styles['delete-button']} onClick={deleteUser} />

@@ -1,15 +1,15 @@
 import { useNavigate } from 'react-router';
-import styles from './MemberTrainingPage.module.css';
+import styles from './MemberTrainingsPage.module.css';
 import axios from 'axios';
 import { PrimaryButton } from '../../../components';
 
-export function TrainingCard({ trainings, token, getTrainings }) {
+export function TrainingCard({ trainings, token, getTrainings, memberId }) {
 
   const navigate = useNavigate();
 
   async function deleteTraining(trainingId) {
     try {
-      await axios.delete(`/api/v1/member/training/${trainingId}`, {
+      await axios.delete(`/api/v1/trainer/trainings/${memberId}/${trainingId}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -48,13 +48,10 @@ export function TrainingCard({ trainings, token, getTrainings }) {
               <p>{training.notes}</p>
             </div>
           )}
-
-          {training.trainer !== null ? '' :
-            <div className={styles['buttons-container']}>
-              <PrimaryButton buttonText={'Update training'} handleClick={() => navigate(`../updateTraining/${training._id}`)} />
-              <PrimaryButton buttonText={'Remove training'} handleClick={() => deleteTraining(training._id)} />
-            </div>
-          }
+          <div className={styles['buttons-container']}>
+            <PrimaryButton buttonText={'Update training'} handleClick={() => navigate(`../updateTraining/${memberId}/${training._id}`)} />
+            <PrimaryButton buttonText={'Remove training'} handleClick={() => deleteTraining(training._id)} />
+          </div>
         </div>
       ))}
     </>

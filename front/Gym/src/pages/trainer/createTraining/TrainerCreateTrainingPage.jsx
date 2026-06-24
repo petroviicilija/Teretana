@@ -1,9 +1,10 @@
 import { TrainingForm } from '../trainingForm/TrainingForm';
-import { useParams, useOutletContext } from 'react-router';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { useOutletContext, useParams } from 'react-router';
 import axios from 'axios';
 
-export function UpdateTrainingPage() {
+//Path za createTraining i naslovi na samoj stranici
+export function TrainerCreateTrainingPage() {
 
   const [workoutTitle, setWorkoutTitle] = useState('');
   const [workoutTitleError, setWorkoutTitleError] = useState(false);
@@ -14,9 +15,9 @@ export function UpdateTrainingPage() {
   const [messageF, setMessageF] = useState(false);
 
   const { token } = useOutletContext();
-  const { trainingId } = useParams();
+  const { memberId } = useParams();
 
-  async function handleUpdate(exercises, workoutTitle, notes){
+  async function createTraining(exercises, workoutTitle, notes) {
 
     let hasError = false;
 
@@ -49,13 +50,16 @@ export function UpdateTrainingPage() {
     }
 
     try {
-      await axios.patch(`/api/v1/member/training/${trainingId}`, payload, {
+      await axios.post(`/api/v1/trainer/trainings/${memberId}`, payload, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
 
-      setMessage('You succesfully updated training.')
+      setMessage('You succesfully made training.')
+      setWorkoutTitle('');
+      setExercises([]);
+      setNotes('');
 
       setTimeout(() => {
         setMessage('');
@@ -66,41 +70,17 @@ export function UpdateTrainingPage() {
     }
   }
 
-  async function getTrainigInfo() {
-    try {
-      const res = await axios.get(`/api/v1/member/training/${trainingId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-
-      setWorkoutTitle(res.data.title);
-      setNotes(res.data.notes);
-      setExercises(res.data.exercises);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  useEffect(() => {
-    getTrainigInfo();
-  },[]);
-
-  if(!exercises) return;
-
   return (
-    <>
-      <TrainingForm workoutTitle={workoutTitle}
-        setWorkoutTitle={setWorkoutTitle}
-        exercises={exercises}
-        setExercises={setExercises}
-        notes={notes}
-        setNotes={setNotes}
-        workoutTitleError={workoutTitleError}
-        message={message}
-        messageF={messageF}
-        onSubmit={handleUpdate}
-        submitText="Save Changes" />
-    </>
-  )
+    <TrainingForm workoutTitle={workoutTitle}
+      setWorkoutTitle={setWorkoutTitle}
+      exercises={exercises}
+      setExercises={setExercises}
+      notes={notes}
+      setNotes={setNotes}
+      workoutTitleError={workoutTitleError}
+      message={message}
+      messageF={messageF}
+      onSubmit={createTraining}
+      submitText="Create Training" />
+  );
 }

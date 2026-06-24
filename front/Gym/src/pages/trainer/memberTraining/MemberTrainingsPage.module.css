@@ -89,16 +89,7 @@
   line-height: 1.6;
 }
 
-/* Headers */
-
-.header-section {
-  margin-bottom: 25px;
-}
-
-.header-section h2 {
-  color: white;
-  font-size: 28px;
-}
+/*Header*/
 
 .page-header{
   display:flex;
@@ -117,49 +108,15 @@
   color:#aaa;
 }
 
-.trainer-section-header {
-  margin: 35px 0 25px;
-  padding: 24px;
-  background: rgba(255, 179, 0, 0.05);
-  border: 1px solid rgba(255, 179, 0, 0.12);
-  border-radius: 20px;
-}
-
-.trainer-section-header h2 {
-  color: white;
-  font-size: 26px;
-  margin-bottom: 10px;
-}
-
-.trainer-section-header p {
-  color: #aaa;
-  line-height: 1.6;
-  max-width: 800px;
-}
-
-.trainer-section-subheader{
-  margin-bottom: 30px;
-  margin-left: 30px;
-}
-
-.section-title {
-  margin: 35px 0 20px;
-}
-
-.section-title h2 {
-  color: white;
-  font-size: 28px;
-  margin-bottom: 8px;
-}
-
-.section-title p {
-  color: #aaa;
-}
-
 /*Button*/
 
 .buttons-container{
   display: flex;
   justify-content: space-between;
   margin-top: auto;
+}
+
+.btn-wrapper{
+  display: flex;
+  column-gap: 10px;
 }

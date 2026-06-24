@@ -17,20 +17,24 @@ export function AdminUsers() {
   const [page, setPage] = useState();
 
   async function getUsers() {
-    const res = await axios.get('/api/v1/admin', {
-      params: {
-        role: searchRole,
-        search: searchText,
-        page
-      },
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    setUsers(res.data.users);
-    setTotalPages(res.data.totalPages);
-    setPage(res.data.currentPage);
-    setLoading(false);
+    try {
+      const res = await axios.get('/api/v1/admin', {
+        params: {
+          role: searchRole,
+          search: searchText,
+          page
+        },
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      setUsers(res.data.users);
+      setTotalPages(res.data.totalPages);
+      setPage(res.data.currentPage);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   useEffect(() => {

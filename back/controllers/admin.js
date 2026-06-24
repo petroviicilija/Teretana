@@ -55,7 +55,7 @@ async function getUser(req, res) {
       'memberData.assignedTrainer',
       'firstName lastName email trainerData.specialization trainerData.hourlyRate'
     )
-  } else if (user.role === 'trainer'){
+  } else if (user.role === 'trainer') {
     await user.populate(
       'trainerData.assignedMembers',
       'firstName lastName email'
@@ -95,7 +95,8 @@ async function assignTrainer(req, res) {
 
   await Promise.all([
     User.findByIdAndUpdate(memberId, {
-      'memberData.assignedTrainer': trainerId
+      'memberData.assignedTrainer': trainerId,
+      'memberData.assignedTrainerAt': new Date()
     }, {
       returnDocument: 'after',
       runValidators: true
@@ -128,7 +129,10 @@ async function removeTrainer(req, res) {
 
   await Promise.all([
     User.findByIdAndUpdate(memberId, {
-      $unset: { 'memberData.assignedTrainer': 1 }
+      $unset: {
+        'memberData.assignedTrainer': 1,
+        'memberData.assignedTrainerAt': 1
+      },
     }, {
       returnDocument: 'after',
       runValidators: true

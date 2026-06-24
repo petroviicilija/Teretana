@@ -1,7 +1,5 @@
 import mongoose from "mongoose";
 
-  //moze i bez assignedMembers
-
 const trainerDataSchema = new mongoose.Schema({
   specialization: {
     type: [String]

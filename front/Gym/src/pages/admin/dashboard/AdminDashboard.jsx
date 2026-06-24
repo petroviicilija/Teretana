@@ -8,7 +8,6 @@ import { NewMemberCard } from './NewMemberCard.jsx';
 import { PieChart } from './PieChart.jsx';
 
 //New Member Card is used for new memebers and members whose memmbership expire soon
-//Dodati View all za members members whose memmbership expire soon tj. jos jednu stranicu
 
 export function AdminDashboard() {
 
@@ -37,18 +36,22 @@ export function AdminDashboard() {
 
   async function searchEmail() {
     if (email !== '') {
-      const res = await axios.get('/api/v1/admin', {
-        params: {
-          role: 'member',
-          search: email,
-          limit: 3
-        },
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-      setUsers(res.data.users);
-      setSearch(true);
+      try {
+        const res = await axios.get('/api/v1/admin', {
+          params: {
+            role: 'member',
+            search: email,
+            limit: 3
+          },
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        setUsers(res.data.users);
+        setSearch(true);
+      } catch (error) {
+        console.log(error);
+      }
     } else {
       setSearch(false);
     }
@@ -118,7 +121,7 @@ export function AdminDashboard() {
       <div className={styles['middle-grid']}>
         <div className={styles['title']}>
           Members whose membership will soon expire
-        </div>  
+        </div>
 
         {
           stats.expiringSoon.map((member) => {

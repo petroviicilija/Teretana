@@ -1,0 +1,81 @@
+/*Header*/
+.page-header {
+  margin-bottom: 35px;
+}
+
+.page-header h1 {
+  color: white;
+  font-size: 42px;
+  margin-bottom: 10px;
+}
+
+.page-header p {
+  color: #aaa;
+}
+
+/*Top grid*/
+
+ .top-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+  margin-bottom: 35px;
+}
+
+/*Stats card*/
+
+.stat-card {
+  background: rgba(20, 20, 20, 0.95);
+  border: 1px solid rgba(255, 179, 0, 0.18);
+  border-radius: 24px;
+  padding: 28px;
+  transition: 0.25s ease;
+}
+
+.inactive{
+  border-color: rgba(255, 90, 90, 0.35);
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 20px rgba(255, 179, 0, 0.12);
+}
+
+.stat-card p {
+  color: #aaa;
+  margin-bottom: 12px;
+}
+
+.stat-card h2 {
+  color: white;
+  font-size: 38px;
+}
+
+/*Middle grid*/
+
+.middle-grid {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 30px;
+}
+
+.assigned-members-container,
+.quick-actions {
+  background: rgba(20, 20, 20, 0.95);
+  border: 1px solid rgba(255, 179, 0, 0.18);
+  border-radius: 28px;
+  padding: 30px;
+}
+
+.assigned-members-container .title,
+.quick-actions .title {
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 25px;
+}
+
+.btn-wrapper button{
+  width: 100%;
+  margin-bottom: 10px;
+}

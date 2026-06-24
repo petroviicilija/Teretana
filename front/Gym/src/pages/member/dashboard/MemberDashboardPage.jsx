@@ -13,13 +13,17 @@ export function MemberDashboardPage() {
   const navigate = useNavigate();
 
   async function getMemberInfo() {
-    const res = await axios.get(`/api/v1/member`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
+    try {
+      const res = await axios.get(`/api/v1/member`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
 
-    setMemberInfo(res.data);
+      setMemberInfo(res.data);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async function getTrainings() {

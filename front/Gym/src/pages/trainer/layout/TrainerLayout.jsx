@@ -6,7 +6,7 @@ import { useState } from 'react';
 export function TrainerLayout (){
 
   const token = localStorage.getItem('token');
-  const user = localStorage.getItem('user');
+  const user = JSON.parse(localStorage.getItem('user'));
 
   const[collapsed, setCollapsed] = useState(true);
 

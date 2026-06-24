@@ -23,8 +23,13 @@ export function NavBar({ user, collapsed, setCollapsed }) {
     ],
     member: [
       { label: 'Dashboard', path: '/member' },
-      { label: 'My Profile', path: '/member/profile' },
-      { label: 'My Trainings', path: '/member/trainings' }
+      { label: 'My Trainings', path: '/member/trainings' },
+      { label: 'My Profile', path: '/member/profile' }
+    ],
+    trainer: [
+      { label: 'Dashboard', path: '/trainer' },
+      { label: 'My Clients', path: '/trainer/members' },
+      { label: 'My Profile', path: '/trainer/profile'}
     ]
   };
 
@@ -45,7 +50,7 @@ export function NavBar({ user, collapsed, setCollapsed }) {
             {item.label}
           </button>
         ))}
-        <button onClick={logOut}>Log Out</button>
+        <button className={styles['logout-btn']} onClick={logOut}>Log Out</button>
       </div>
       <img src={Logo} className={styles['logo-img']} />
     </nav>

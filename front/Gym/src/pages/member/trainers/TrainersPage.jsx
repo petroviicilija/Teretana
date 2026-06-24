@@ -30,8 +30,6 @@ export function TrainersPage() {
 
   if (!trainers) return;
 
-  console.log(trainers);
-
   return (
     <div className={styles['trainers-page']}>
       <div className={styles['trainers-card']}>

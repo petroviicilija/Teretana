@@ -3,7 +3,7 @@ import { useParams, useOutletContext } from 'react-router';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-export function UpdateTrainingPage() {
+export function TrainerUpdateTrainigPage() {
 
   const [workoutTitle, setWorkoutTitle] = useState('');
   const [workoutTitleError, setWorkoutTitleError] = useState(false);
@@ -14,7 +14,7 @@ export function UpdateTrainingPage() {
   const [messageF, setMessageF] = useState(false);
 
   const { token } = useOutletContext();
-  const { trainingId } = useParams();
+  const { trainingId, memberId } = useParams();
 
   async function handleUpdate(exercises, workoutTitle, notes){
 
@@ -49,7 +49,7 @@ export function UpdateTrainingPage() {
     }
 
     try {
-      await axios.patch(`/api/v1/member/training/${trainingId}`, payload, {
+      await axios.patch(`/api/v1/trainer/trainings/${memberId}/${trainingId}`, payload, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -68,7 +68,7 @@ export function UpdateTrainingPage() {
 
   async function getTrainigInfo() {
     try {
-      const res = await axios.get(`/api/v1/member/training/${trainingId}`, {
+      const res = await axios.get(`/api/v1/trainer/trainings/${memberId}/${trainingId}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }

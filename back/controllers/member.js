@@ -17,7 +17,6 @@ async function getAllTrainers(req, res) {
   res.status(StatusCodes.OK).json(trainers);
 }
 
-//Vrv treba obrisati getTrainer
 async function getTrainer(req, res) {
   const trainerId = req.params.id;
   const trainer = await User.findById(trainerId).select('-__v');

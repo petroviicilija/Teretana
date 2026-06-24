@@ -12,6 +12,9 @@ const memberDataSchema = new mongoose.Schema({
   assignedTrainer: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
+  },
+  assignedTrainerAt: {
+    type: Date
   }
 }, {
   toJSON: { virtuals: true },

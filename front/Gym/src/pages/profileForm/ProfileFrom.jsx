@@ -1,20 +1,23 @@
-import { useState } from "react";
-import { useNavigate } from "react-router";
-import styles from './MemberProfilePage.module.css';
-import axios from "axios";
-import { PrimaryButton } from "../../../components";
+import styles from './ProfileForm.module.css';
+import { useState } from 'react';
+import { PrimaryButton } from '../../components';
+import axios from 'axios';
 
-//Dodati navigaciju za dugme da se vide dostupni treneri
+export function ProfileForm({
+  firstName,
+  setFirstName,
+  lastName,
+  setLastName,
+  email,
+  setEmail,
+  token,
+  personalInfoPath,
+  changePasswordPath,
+  getInfo,
+  renderSpecialCard }) {
 
-export function MemberProfileCard({ memberInfo, token, getMemberInfo }) {
-
-  const navigate = useNavigate();
-
-  const [firstName, setFirstName] = useState(memberInfo.firstName);
   const [firstNameError, setFirstNameError] = useState(false);
-  const [lastName, setLastName] = useState(memberInfo.lastName);
   const [lastNameError, setLastNameError] = useState(false);
-  const [email, setEmail] = useState(memberInfo.email);
   const [emailError, setEmailError] = useState(false);
 
   const [currentPassword, setCurrentPassword] = useState('');
@@ -25,7 +28,7 @@ export function MemberProfileCard({ memberInfo, token, getMemberInfo }) {
   async function changePassword() {
     if (newPassword === confirmPassword) {
       try {
-        await axios.patch('/api/v1/member/password', {
+        await axios.patch(changePasswordPath, {
           currentPassword,
           newPassword
         }, {
@@ -81,7 +84,7 @@ export function MemberProfileCard({ memberInfo, token, getMemberInfo }) {
     if (hasError) return;
 
     try {
-      await axios.patch('/api/v1/member', {
+      await axios.patch(personalInfoPath, {
         firstName,
         lastName,
         email
@@ -90,14 +93,18 @@ export function MemberProfileCard({ memberInfo, token, getMemberInfo }) {
           Authorization: `Bearer ${token}`
         }
       });
-      getMemberInfo();
+      getInfo();
     } catch (error) {
       console.log(error);
     }
   }
 
   return (
-    <>
+    <div className={styles['profile-page']}>
+      <div className={styles['profile-header']}>
+        <h1>Profile</h1>
+        <p>Manage your personal information</p>
+      </div>
       <div className={styles['profile-grid']}>
 
         <div className={styles['profile-card']}>
@@ -126,57 +133,25 @@ export function MemberProfileCard({ memberInfo, token, getMemberInfo }) {
         </div>
 
         <div className={styles['profile-card']}>
-          <div className={styles['section-title']}>
-            <label>Membership</label>
-          </div>
-          <div className={styles['input-group']}>
-            <label>Status</label>
-            {memberInfo.memberData.isActive ? <div className={styles['active-status']}>Active</div>
-              : <div className={styles['not-active-status']}>Not Active</div>}
-          </div>
-          <div className={styles['input-group']}>
-            <label>Membership Start</label>
-            <p>{memberInfo.memberData.membershipStart.split('T')[0]}</p>
-          </div>
-
-          <div className={styles['input-group']}>
-            <label>Membership End</label>
-            <p>{memberInfo.memberData.membershipEnd.split('T')[0]}</p>
-          </div>
-          {memberInfo.memberData.assignedTrainer ?
-            <div className={styles['input-group']}>
-              <label>Trainer</label>
-              <div className={styles['trainer-card']}>
-                <h4>
-                  {memberInfo.memberData.assignedTrainer.firstName} {memberInfo.memberData.assignedTrainer.lastName}
-                </h4>
-              </div>
-            </div>
-            :
-            <div className={styles['input-group']}>
-              <label>Trainer</label>
-              <p>You don't have an assigned trainer</p>
-            </div>
-          }
-          <div className={styles['btn-wrapper']}>
-            <PrimaryButton buttonText={'Browse Trainers'} handleClick={() => navigate('/member/trainers')} />
-          </div>
+          {renderSpecialCard()}
         </div>
       </div>
-
       <div className={styles['profile-card']}>
 
         <div className={styles['section-title']}>
           <label>Security</label>
         </div>
         <div className={styles['password-group']}>
-          <label>Current Password:</label> <input type="password" value={currentPassword} onChange={(event) => setCurrentPassword(event.target.value)} />
+          <label>Current Password:</label>
+          <input type="password" value={currentPassword} onChange={(event) => setCurrentPassword(event.target.value)} />
         </div>
         <div className={styles['password-group']}>
-          <label>New Password:</label> <input type="password" value={newPassword} onChange={(event) => setNewPassword(event.target.value)} />
+          <label>New Password:</label>
+          <input type="password" value={newPassword} onChange={(event) => setNewPassword(event.target.value)} />
         </div>
         <div className={styles['password-group']}>
-          <label>Confirm new Password:</label> <input type="password" value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)} />
+          <label>Confirm new Password:</label>
+          <input type="password" value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)} />
         </div>
 
         <div className={styles['bottom-section']}>
@@ -184,6 +159,6 @@ export function MemberProfileCard({ memberInfo, token, getMemberInfo }) {
           {message && (<div className={styles['failure']}> {message} </div>)}
         </div>
       </div>
-    </>
-  )
+    </div>
+  );
 }
