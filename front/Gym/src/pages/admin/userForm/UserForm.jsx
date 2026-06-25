@@ -1,8 +1,11 @@
 import styles from './UserForm.module.css';
 import { ErrorText, SuccesMessage, FailureMessage, PrimaryButton, BackButton } from '../../../components';
+import { MemberData } from './MemberData';
+import { TrainerData } from './TrainerData';
 
 export function UserForm({
   mode,
+  user,
   firstName,
   firstNameError,
   setFirstName,
@@ -19,13 +22,51 @@ export function UserForm({
   password,
   passwordError,
   setPassword,
-  extraSection,
+  dateStart,
+  dateStartError,
+  setDateStart,
+  dateEnd,
+  dateEndError,
+  setDateEnd,
+  price,
+  priceError,
+  specialization,
+  specializationError,setPrice,
+  setSpecialization,
   successMessage,
   failureMessage,
   submitText,
   submitFunction
 }) {
 
+  function createPayload() {
+
+    const roleMap = {
+      member: {
+        memberData: {
+          membershipStart: dateStart,
+          membershipEnd: dateEnd
+        }
+      },
+      trainer: {
+        trainerData: {
+          specialization,
+          hourlyRate: price
+        }
+      },
+      admin: {}
+    };
+
+    return {
+      firstName,
+      lastName,
+      email,
+      password,
+      role,
+      gender,
+      ...roleMap[role]
+    }
+  }
 
   return (
     <div className={styles['create-user-page']}>
@@ -95,9 +136,24 @@ export function UserForm({
         </div>
 
         <div className={styles['extra-section']}>
-          {extraSection()}
-          {/* {role === 'member' && <MemberData dateStartError={dateStartError} dateStart={dateStart} setDate={setDateStart} />}
-          {role === 'trainer' && <TrainerData price={price} priceError={priceError} specialization={specialization} specializationError={specializationError} setPrice={setPrice} setSpecialization={setSpecialization} />} */}
+          {role === 'member' && <MemberData mode={mode}
+            dateStart={dateStart}
+            setDateStart={setDateStart}
+            dateEnd={dateEnd}
+            dateStartError={dateStartError}
+            setDateEnd={setDateEnd}
+            dateEndError={dateEndError}
+            assignedTrainer={user?.memberData?.assignedTrainer}
+            memberName={user?.firstName}
+            memberId={user?._id} />}
+          {role === 'trainer' && <TrainerData mode={mode}
+            assignedMembers={user?.trainerData?.assignedMembers}
+            price={price}
+            priceError={priceError}
+            specialization={specialization}
+            specializationError={specializationError}
+            setPrice={setPrice}
+            setSpecialization={setSpecialization} />}
         </div>
 
         {successMessage && <SuccesMessage message={successMessage} />}
@@ -105,7 +161,7 @@ export function UserForm({
 
         <div className={styles['buttons-container']}>
           <BackButton />
-          <PrimaryButton buttonText={submitText} handleClick={submitFunction} />
+          <PrimaryButton buttonText={submitText} handleClick={() =>submitFunction(createPayload)} />
         </div>
       </div>
     </div>

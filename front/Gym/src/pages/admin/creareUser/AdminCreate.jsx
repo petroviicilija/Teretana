@@ -1,9 +1,6 @@
 import { useState } from 'react';
-import styles from './AdminCreate.module.css';
-import { MemberData } from './MemberData.jsx';
-import { TrainerData } from './TrainerData.jsx';
 import { useOutletContext } from 'react-router';
-import { BackButton, PrimaryButton, ErrorText, FailureMessage, SuccesMessage } from '../../../components';
+import { UserForm } from '../userForm/UserForm.jsx';
 import axios from 'axios';
 
 export function AdminCreate() {
@@ -25,6 +22,7 @@ export function AdminCreate() {
 
   //Memmber Info
   const [dateStart, setDateStart] = useState('');
+  const [dateEnd, setDateEnd] = useState('');
 
   //Trainer info
   const [price, setPrice] = useState(0);
@@ -36,52 +34,11 @@ export function AdminCreate() {
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [dateStartError, setDateStartError] = useState(false);
+  const [dateEndError, setDateEndError] = useState(false);
   const [priceError, setPriceError] = useState(false);
   const [specializationError, setSpecializationError] = useState(false);
 
-  function setDateEnd(dateStart) {
-
-    const date = new Date(dateStart);
-    date.setMonth(date.getMonth() + 1);
-
-    return date.toISOString().split('T')[0];
-  }
-
-  function createPayload() {
-
-    let dateEnd;
-    if (role === 'member') {
-      dateEnd = setDateEnd(dateStart);
-    }
-
-    const roleMap = {
-      member: {
-        memberData: {
-          membershipStart: dateStart,
-          membershipEnd: dateEnd
-        }
-      },
-      trainer: {
-        trainerData: {
-          specialization,
-          hourlyRate: price
-        }
-      },
-      admin: {}
-    };
-
-    return {
-      firstName,
-      lastName,
-      email,
-      password,
-      role,
-      gender,
-      ...roleMap[role]
-    }
-  }
-
-  async function createUser() {
+  async function createUser(createPayload) {
 
     let hasError;
 
@@ -116,6 +73,12 @@ export function AdminCreate() {
         hasError = true;
       } else {
         setDateStartError(false);
+      }
+      if (dateEnd === '') {
+        setDateEndError(true)
+        hasError = true;
+      } else {
+        setDateEndError(false);
       }
     }
 
@@ -172,72 +135,39 @@ export function AdminCreate() {
   }
 
   return (
-    <div className={styles['create-user-page']}>
-      <div className={styles['create-user-card']}>
-
-        <div className={styles['header-section']}>
-          <h1>Create User</h1>
-          <p>Add a new member, trainer or admin</p>
-        </div>
-
-        <div className={styles['form-grid']}>
-
-          <div className={styles['input-group']}>
-            <label>First Name</label>
-            <input type="text" className={firstNameError ? `${styles['input-error']}` : ''} value={firstName} onChange={(event) => setFirstName(event.target.value)} />
-            {firstNameError && <ErrorText text={'First name is required.'} />}
-          </div>
-
-          <div className={styles['input-group']}>
-            <label>Last Name</label>
-            <input type="text" className={lastNameError ? `${styles['input-error']}` : ''} value={lastName} onChange={(event) => setLastName(event.target.value)} />
-            {lastNameError && <ErrorText text={'Last name is required.'} />}
-          </div>
-
-          <div className={styles['input-group']}>
-            <label>Gender</label>
-            <select name="gender" value={gender} onChange={(event) => setGender(event.target.value)}>
-              <option value="man">Man</option>
-              <option value="woman">Woman</option>
-            </select>
-          </div>
-
-          <div className={styles['input-group']}>
-            <label>Role</label>
-            <select name="role" value={role} onChange={(event) => setRole(event.target.value)}>
-              <option value="member">Member</option>
-              <option value="trainer">Trainer</option>
-              <option value="admin">Admin</option>
-            </select>
-          </div>
-
-          <div className={styles['input-group']}>
-            <label>Email</label>
-            <input type="text" className={emailError ? `${styles['input-error']}` : ''} value={email} onChange={(event) => setEmail(event.target.value)} />
-            {emailError && <ErrorText text={'Email is required.'} />}
-          </div>
-
-          <div className={styles['input-group']}>
-            <label>Password</label>
-            <input type="password" className={passwordError ? `${styles['input-error']}` : ''} value={password} onChange={(event) => setPassword(event.target.value)} />
-            {passwordError && <ErrorText text={'Password is required.'} />}
-          </div>
-
-        </div>
-
-        <div className={styles['extra-section']}>
-          {role === 'member' && <MemberData dateStartError={dateStartError} dateStart={dateStart} setDate={setDateStart} />}
-          {role === 'trainer' && <TrainerData price={price} priceError={priceError} specialization={specialization} specializationError={specializationError} setPrice={setPrice} setSpecialization={setSpecialization} />}
-        </div>
-
-        {successMessage && <SuccesMessage message={successMessage} />}
-        {failureMessage && <FailureMessage message={failureMessage} />}
-
-        <div className={styles['buttons-container']}>
-          <BackButton />
-          <PrimaryButton buttonText={'Create User'} handleClick={createUser} />
-        </div>
-      </div>
-    </div>
+    <UserForm mode="create"
+      firstName={firstName}
+      firstNameError={firstNameError}
+      setFirstName={setFirstName}
+      lastName={lastName}
+      lastNameError={lastNameError}
+      setLastName={setLastName}
+      gender={gender}
+      setGender={setGender}
+      role={role}
+      setRole={setRole}
+      email={email}
+      emailError={emailError}
+      setEmail={setEmail}
+      password={password}
+      passwordError={passwordError}
+      setPassword={setPassword}
+      dateStart={dateStart}
+      dateStartError={dateStartError}
+      setDateStart={setDateStart}
+      dateEnd={dateEnd}
+      dateEndError={dateEndError}
+      setDateEnd={setDateEnd}
+      price={price}
+      priceError={priceError}
+      specialization={specialization}
+      specializationError={specializationError}
+      setPrice={setPrice}
+      setSpecialization={setSpecialization}
+      successMessage={successMessage}
+      failureMessage={failureMessage}
+      submitText='Create User'
+      submitFunction={createUser}
+    />
   )
 }
