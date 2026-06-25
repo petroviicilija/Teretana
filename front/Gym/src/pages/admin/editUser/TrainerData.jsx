@@ -1,8 +1,9 @@
 import styles from './EditUserPage.module.css';
 import { useNavigate } from 'react-router';
 import { PrimaryButton } from '../../../components';
+import { ErrorText } from '../../../components';
 
-export function TrainerData({price, specialization, setPrice, setSpecialization, assignedMembers }) {
+export function TrainerData({price, priceError, specialization, specializationError, setPrice, setSpecialization, assignedMembers }) {
 
   const navigate = useNavigate();
 
@@ -10,11 +11,13 @@ export function TrainerData({price, specialization, setPrice, setSpecialization,
     <>
       <div className={styles['input-group']}>
         <label>Specialization</label>
-        <input type="text" value={specialization} onChange={(event) => setSpecialization(event.target.value)} />
+        <input type="text" className={specializationError ? `${styles['input-error']}` : ''} value={specialization} onChange={(event) => setSpecialization(event.target.value)} />
+        {specializationError && <ErrorText text={'Specialization is required.'} />}
       </div>
       <div className={styles['input-group']}>
         <label> Price of private training (€) </label>
-        <input type="number" value={price} onChange={(event) => setPrice(event.target.value)} />
+        <input type="number" className={priceError ? `${styles['input-error']}` : ''} value={price} onChange={(event) => setPrice(event.target.value)} />
+        {priceError && <ErrorText text={'Price of private training is required.'} />}
       </div>
       <div className={styles['input-group']}>
         <label>Clients</label>

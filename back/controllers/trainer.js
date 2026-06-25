@@ -42,7 +42,7 @@ async function getStats(req, res) {
   const [trainer, latestClients, numberOfTrainings, activeClients, numberOfNewClients] = await Promise.all([
     User.findById(userId).select('-__v').populate(
       'trainerData.assignedMembers',
-      'firstName lastName email memberData.membershipEnd'
+      'firstName lastName email memberData.membershipEnd memberData.assignedTrainerAt'
     ),
     User.find({
       'memberData.assignedTrainer': userId

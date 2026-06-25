@@ -3,7 +3,7 @@ import styles from './AdminCreate.module.css';
 import { MemberData } from './MemberData.jsx';
 import { TrainerData } from './TrainerData.jsx';
 import { useOutletContext } from 'react-router';
-import { BackButton, PrimaryButton } from '../../../components';
+import { BackButton, PrimaryButton, ErrorText, FailureMessage, SuccesMessage } from '../../../components';
 import axios from 'axios';
 
 export function AdminCreate() {
@@ -11,21 +11,33 @@ export function AdminCreate() {
   const { token } = useOutletContext();
 
   const [successMessage, setSuccessMessage] = useState('');
+  const [failureMessage, setFailureMessage] = useState('');
 
   //All users info
   const [role, setRole] = useState('member');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+
   const [gender, setGender] = useState('man');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+
   //Memmber Info
-  const [dateStart, setDateStart] = useState();
+  const [dateStart, setDateStart] = useState('');
 
   //Trainer info
-  const [price, setPrice] = useState();
+  const [price, setPrice] = useState(0);
   const [specialization, setSpecialization] = useState('');
+
+  //Errors
+  const [firstNameError, setFirstNameError] = useState(false);
+  const [lastNameError, setLastNameError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [dateStartError, setDateStartError] = useState(false);
+  const [priceError, setPriceError] = useState(false);
+  const [specializationError, setSpecializationError] = useState(false);
 
   function setDateEnd(dateStart) {
 
@@ -71,6 +83,59 @@ export function AdminCreate() {
 
   async function createUser() {
 
+    let hasError;
+
+    if (lastName === '') {
+      setLastNameError(true);
+      hasError = true;
+    } else {
+      setLastNameError(false);
+    }
+    if (firstName === '') {
+      setFirstNameError(true);
+      hasError = true;
+    } else {
+      setFirstNameError(false);
+    }
+    if (email === '') {
+      setEmailError(true);
+      hasError = true;
+    } else {
+      setEmailError(false);
+    }
+    if (password === '') {
+      setPasswordError(true);
+      hasError = true;
+    } else {
+      setPasswordError(false);
+    }
+
+    if (role === 'member') {
+      if (dateStart === '') {
+        setDateStartError(true)
+        hasError = true;
+      } else {
+        setDateStartError(false);
+      }
+    }
+
+    if (role === 'trainer') {
+      if (specialization === '') {
+        setSpecializationError(true)
+        hasError = true;
+      } else {
+        setSpecializationError(false);
+      }
+      if (!price || price <= 0) {
+        setPriceError(true)
+        hasError = true;
+      } else {
+        setPriceError(false);
+      }
+    }
+
+    if (hasError) return;
+
     const payLoad = createPayload();
 
     try {
@@ -96,6 +161,12 @@ export function AdminCreate() {
         setSuccessMessage('');
       }, 3000);
     } catch (error) {
+
+      setFailureMessage(error.response.data.msg);
+
+      setTimeout(() => {
+        setFailureMessage('');
+      }, 3000);
       console.log(error);
     }
   }
@@ -113,12 +184,14 @@ export function AdminCreate() {
 
           <div className={styles['input-group']}>
             <label>First Name</label>
-            <input type="text" value={firstName} onChange={(event) => setFirstName(event.target.value)} />
+            <input type="text" className={firstNameError ? `${styles['input-error']}` : ''} value={firstName} onChange={(event) => setFirstName(event.target.value)} />
+            {firstNameError && <ErrorText text={'First name is required.'} />}
           </div>
 
           <div className={styles['input-group']}>
             <label>Last Name</label>
-            <input type="text" value={lastName} onChange={(event) => setLastName(event.target.value)} />
+            <input type="text" className={lastNameError ? `${styles['input-error']}` : ''} value={lastName} onChange={(event) => setLastName(event.target.value)} />
+            {lastNameError && <ErrorText text={'Last name is required.'} />}
           </div>
 
           <div className={styles['input-group']}>
@@ -140,22 +213,25 @@ export function AdminCreate() {
 
           <div className={styles['input-group']}>
             <label>Email</label>
-            <input type="text" value={email} onChange={(event) => setEmail(event.target.value)} />
+            <input type="text" className={emailError ? `${styles['input-error']}` : ''} value={email} onChange={(event) => setEmail(event.target.value)} />
+            {emailError && <ErrorText text={'Email is required.'} />}
           </div>
 
           <div className={styles['input-group']}>
             <label>Password</label>
-            <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} />
+            <input type="password" className={passwordError ? `${styles['input-error']}` : ''} value={password} onChange={(event) => setPassword(event.target.value)} />
+            {passwordError && <ErrorText text={'Password is required.'} />}
           </div>
 
         </div>
 
         <div className={styles['extra-section']}>
-          {role === 'member' && <MemberData dateStart={dateStart} setDate={setDateStart} />}
-          {role === 'trainer' && <TrainerData price={price} specialization={specialization} setPrice={setPrice} setSpecialization={setSpecialization} />}
+          {role === 'member' && <MemberData dateStartError={dateStartError} dateStart={dateStart} setDate={setDateStart} />}
+          {role === 'trainer' && <TrainerData price={price} priceError={priceError} specialization={specialization} specializationError={specializationError} setPrice={setPrice} setSpecialization={setSpecialization} />}
         </div>
 
-        {successMessage && (<div className={styles['success-message']}> {successMessage} </div>)}
+        {successMessage && <SuccesMessage message={successMessage} />}
+        {failureMessage && <FailureMessage message={failureMessage} />}
 
         <div className={styles['buttons-container']}>
           <BackButton />

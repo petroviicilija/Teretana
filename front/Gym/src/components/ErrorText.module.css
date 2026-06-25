@@ -1,0 +1,13 @@
+/*Error*/
+.bottom-section {
+  display: flex;
+}
+
+.error-text {
+  width: 100%;
+  color: #ff5c5c;
+  font-size: 14px;
+  margin-top: 5px;
+  margin-bottom: 12px;
+  padding-left: 5px;
+}

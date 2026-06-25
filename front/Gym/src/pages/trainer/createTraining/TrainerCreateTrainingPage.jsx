@@ -1,4 +1,4 @@
-import { TrainingForm } from '../trainingForm/TrainingForm';
+import { TrainingForm } from '../../trainingForm/TrainingForm';
 import { useState } from 'react';
 import { useOutletContext, useParams } from 'react-router';
 import axios from 'axios';
@@ -10,8 +10,8 @@ export function TrainerCreateTrainingPage() {
   const [exercises, setExercises] = useState([]);
   const [notes, setNotes] = useState('');
 
-  const [message, setMessage] = useState('');
-  const [messageF, setMessageF] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [failureMessage, setFailureMessage] = useState('');
 
   const { token } = useOutletContext();
   const { memberId } = useParams();
@@ -29,11 +29,9 @@ export function TrainerCreateTrainingPage() {
     if (exercises.length === 0) {
       hasError = true;
 
-      setMessage('You dont have any exercises!')
-      setMessageF(true);
+      setFailureMessage('You dont have any exercises!')
       setTimeout(() => {
-        setMessage('');
-        setMessageF(false);
+        setFailureMessage('');
       }, 3000);
     }
 
@@ -55,30 +53,37 @@ export function TrainerCreateTrainingPage() {
         }
       });
 
-      setMessage('You succesfully made training.')
+      setSuccessMessage('You succesfully made training.')
       setWorkoutTitle('');
       setExercises([]);
       setNotes('');
 
       setTimeout(() => {
-        setMessage('');
+        setSuccessMessage('');
       }, 3000);
 
     } catch (error) {
+      setFailureMessage(error.response.data.msg);
+
+      setTimeout(() => {
+        setFailureMessage('');
+      }, 3000);
       console.log(error);
     }
   }
 
   return (
-    <TrainingForm workoutTitle={workoutTitle}
+    <TrainingForm trainingFromTitle={'Create Client Workouts'}
+      trainingFromSubtitle={'Build tailored training plans to help your clients reach their goals.'} 
+      workoutTitle={workoutTitle}
       setWorkoutTitle={setWorkoutTitle}
       exercises={exercises}
       setExercises={setExercises}
       notes={notes}
       setNotes={setNotes}
       workoutTitleError={workoutTitleError}
-      message={message}
-      messageF={messageF}
+      successMessage={successMessage}
+      failureMessage={failureMessage}
       onSubmit={createTraining}
       submitText="Create Training" />
   );

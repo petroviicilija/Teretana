@@ -4,7 +4,7 @@ const trainingPlanSchema = new mongoose.Schema({
   member: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true
+    required: [true, 'Please provide member']
   },
   trainer: {
     type: mongoose.Schema.Types.ObjectId,
@@ -13,7 +13,7 @@ const trainingPlanSchema = new mongoose.Schema({
   },
   title: {
     type: String,
-    required: true
+    required: [true, 'Please provide training title']
   },
   notes: {
     type: String
@@ -22,15 +22,15 @@ const trainingPlanSchema = new mongoose.Schema({
     {
       name: {
         type: String,
-        required: true
+        required: [true, 'Please provide exercise name']
       },
       sets: {
         type: Number,
-        required: true
+        required: [true, 'Please provide sets']
       },
       reps: {
         type: Number,
-        required: true
+        required: [true, 'Please provide reps']
       },
       weight: {
         type: Number

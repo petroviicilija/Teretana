@@ -1,4 +1,4 @@
-import { TrainingForm } from '../trainingForm/TrainingForm';
+import { TrainingForm } from '../../trainingForm/TrainingForm';
 import { useParams, useOutletContext } from 'react-router';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -10,13 +10,13 @@ export function TrainerUpdateTrainigPage() {
   const [exercises, setExercises] = useState([]);
   const [notes, setNotes] = useState('');
 
-  const [message, setMessage] = useState('');
-  const [messageF, setMessageF] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [failureMessage, setFailureMessage] = useState('');
 
   const { token } = useOutletContext();
   const { trainingId, memberId } = useParams();
 
-  async function handleUpdate(exercises, workoutTitle, notes){
+  async function handleUpdate(exercises, workoutTitle, notes) {
 
     let hasError = false;
 
@@ -29,11 +29,9 @@ export function TrainerUpdateTrainigPage() {
     if (exercises.length === 0) {
       hasError = true;
 
-      setMessage('You dont have any exercises!')
-      setMessageF(true);
+      setFailureMessage('You dont have any exercises!')
       setTimeout(() => {
-        setMessage('');
-        setMessageF(false);
+        setFailureMessage('');
       }, 3000);
     }
 
@@ -41,11 +39,8 @@ export function TrainerUpdateTrainigPage() {
 
     const payload = {
       title: workoutTitle,
-      exercises
-    }
-
-    if (notes !== '') {
-      payload.notes = notes;
+      exercises,
+      notes
     }
 
     try {
@@ -55,13 +50,18 @@ export function TrainerUpdateTrainigPage() {
         }
       });
 
-      setMessage('You succesfully updated training.')
+      setSuccessMessage('You succesfully updated training.')
 
       setTimeout(() => {
-        setMessage('');
+        setSuccessMessage('');
       }, 3000);
 
     } catch (error) {
+      setFailureMessage(error.response.data.msg);
+
+      setTimeout(() => {
+        setFailureMessage('');
+      }, 3000);
       console.log(error);
     }
   }
@@ -84,21 +84,23 @@ export function TrainerUpdateTrainigPage() {
 
   useEffect(() => {
     getTrainigInfo();
-  },[]);
+  }, []);
 
-  if(!exercises) return;
+  if (!exercises) return;
 
   return (
     <>
-      <TrainingForm workoutTitle={workoutTitle}
+      <TrainingForm trainingFromTitle={'Update Client Workouts'}
+        trainingFromSubtitle={'Build tailored training plans to help your clients reach their goals.'}
+        workoutTitle={workoutTitle}
         setWorkoutTitle={setWorkoutTitle}
         exercises={exercises}
         setExercises={setExercises}
         notes={notes}
         setNotes={setNotes}
         workoutTitleError={workoutTitleError}
-        message={message}
-        messageF={messageF}
+        successMessage={successMessage}
+        failureMessage={failureMessage}
         onSubmit={handleUpdate}
         submitText="Save Changes" />
     </>

@@ -1,6 +1,6 @@
 import styles from './ProfileForm.module.css';
 import { useState } from 'react';
-import { PrimaryButton } from '../../components';
+import { PrimaryButton, ErrorText, SuccesMessage, FailureMessage } from '../../components';
 import axios from 'axios';
 
 export function ProfileForm({
@@ -23,7 +23,11 @@ export function ProfileForm({
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [message, setMessage] = useState('');
+
+  const [successMessage, setSuccessMessage] = useState('');
+  const [failureMessage, setFailureMessage] = useState('');
+  const [successMessagePassword, setSuccessMessagePassword] = useState('');
+  const [failureMessagePassword, setFailureMessagePassword] = useState('');
 
   async function changePassword() {
     if (newPassword === confirmPassword) {
@@ -40,20 +44,24 @@ export function ProfileForm({
         setCurrentPassword('');
         setNewPassword('');
         setConfirmPassword('')
+        setSuccessMessagePassword('Succesfully changed password');
+        setTimeout(() => {
+          setSuccessMessagePassword('');
+        }, 3000);
       } catch (error) {
 
-        setMessage(error.response.data.msg);
+        setFailureMessagePassword(error.response.data.msg);
 
         setTimeout(() => {
-          setMessage('');
+          setFailureMessagePassword('');
         }, 3000);
         console.log(error);
       }
     } else {
-      setMessage('Passwords dont match!');
+      setFailureMessagePassword('Passwords dont match!');
 
       setTimeout(() => {
-        setMessage('');
+        setFailureMessagePassword('');
       }, 3000);
     }
   }
@@ -94,7 +102,18 @@ export function ProfileForm({
         }
       });
       getInfo();
+
+      setSuccessMessage('Changes saved!');
+
+      setTimeout(() => {
+        setSuccessMessage('');
+      }, 3000);
     } catch (error) {
+      setFailureMessage(error.response.data.msg);
+
+      setTimeout(() => {
+        setFailureMessage('');
+      }, 3000);
       console.log(error);
     }
   }
@@ -114,21 +133,23 @@ export function ProfileForm({
           <div className={styles['input-group']}>
             <label>First Name:</label>
             <input type="text" className={firstNameError ? `${styles['input-error']}` : ''} value={firstName} onChange={(event) => setFirstName(event.target.value)} />
-            {firstNameError && <p className={styles["error-text"]}>First name is required.</p>}
+            {firstNameError && <ErrorText text={'First name is required.'} />}
           </div>
           <div className={styles['input-group']}>
             <label>Last Name: </label>
             <input type="text" className={lastNameError ? `${styles['input-error']}` : ''} value={lastName} onChange={(event) => setLastName(event.target.value)} />
-            {lastNameError && <p className={styles["error-text"]}>Last name is required.</p>}
+            {lastNameError && <ErrorText text={'Last name is required.'} />}
           </div>
           <div className={styles['input-group']}>
             <label>Email: </label>
             <input type="text" className={emailError ? `${styles['input-error']}` : ''} value={email} onChange={(event) => setEmail(event.target.value)} />
-            {emailError && <p className={styles["error-text"]}>Email name is required.</p>}
+            {emailError && <ErrorText text={'Email name is required.'} />}
           </div>
 
           <div className={styles['btn-wrapper']}>
             <PrimaryButton buttonText={'Save changes'} handleClick={saveChanges} />
+            {successMessage && <SuccesMessage message={successMessage} />}
+            {failureMessage && <FailureMessage message={failureMessage} />}
           </div>
         </div>
 
@@ -156,7 +177,8 @@ export function ProfileForm({
 
         <div className={styles['bottom-section']}>
           <PrimaryButton buttonText={'Change Password'} handleClick={changePassword} />
-          {message && (<div className={styles['failure']}> {message} </div>)}
+          {successMessagePassword && <SuccesMessage message={successMessagePassword} />}
+          {failureMessagePassword && <FailureMessage message={failureMessagePassword} />}
         </div>
       </div>
     </div>

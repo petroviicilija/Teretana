@@ -1,17 +1,19 @@
 import styles from './TrainingForm.module.css';
 import { useState } from 'react';
-import DeleteButton from '../../../assets/deleteButton.png';
-import { BackButton, PrimaryButton } from '../../../components';
+import DeleteButton from '../../assets/deleteButton.png';
+import { BackButton, PrimaryButton, ErrorText, SuccesMessage, FailureMessage } from '../../components';
 
-export function TrainingForm({ workoutTitle,
+export function TrainingForm({ trainingFromTitle,
+  trainingFromSubtitle,
+  workoutTitle,
   setWorkoutTitle,
   exercises,
   setExercises,
   notes,
   setNotes,
   workoutTitleError,
-  message,
-  messageF,
+  successMessage,
+  failureMessage,
   onSubmit,
   submitText }) {
 
@@ -70,35 +72,36 @@ export function TrainingForm({ workoutTitle,
     <div className={styles['create-training-page']}>
       <div className={styles['create-training-card']}>
         <div className={styles['header-section']}>
-          <h1>Create Client Workouts</h1>
-          <p>Build tailored training plans to help your clients reach their goals.</p>
+          <h1>{trainingFromTitle}</h1>
+          <p>{trainingFromSubtitle}</p>
         </div>
 
         <div className={styles['workout-title-input']}>
           <h2>Workout title: </h2>
           <input type="text" className={`${workoutTitleError ? styles['input-error'] : ''}`} value={workoutTitle} placeholder="Push Day" onChange={(event) => setWorkoutTitle(event.target.value)} />
-          {workoutTitleError && <p className={styles["error-text"]}>Workout title is required</p>}
+          {workoutTitleError && <ErrorText text={'Workout title is required'} />}
         </div>
 
         <div className={styles['exercise-form']}>
           <label>Exercise Name</label>
-          <div className={styles['exercise-header']}>
-            <input type="text" className={`${exerciseNameError ? styles['input-error'] : ''}`} value={exerciseName} placeholder="Bench Press" onChange={(event) => setExerciseName(event.target.value)} />
-            <PrimaryButton buttonText={'Add Exercise'} handleClick={() => addExercise(exercises, exerciseName, sets, reps, weight)} />
+          <div>
+            <div className={styles['exercise-header']}>
+              <input type="text" className={`${exerciseNameError ? styles['input-error'] : ''}`} value={exerciseName} placeholder="Bench Press" onChange={(event) => setExerciseName(event.target.value)} />
+              <PrimaryButton buttonText={'Add Exercise'} handleClick={() => addExercise(exercises, exerciseName, sets, reps, weight)} />
+            </div>
+            {exerciseNameError && <ErrorText text={'Exercise Name is required'} />}
           </div>
-
-          {exerciseNameError && <p className={styles["error-text"]}>Exercise Name is required</p>}
 
           <div className={styles['exercise-details']}>
             <div>
               <label>Sets</label>
               <input type="number" className={`${setsError ? styles['input-error'] : ''}`} value={sets} onChange={(event) => setSets(Number(event.target.value))} />
-              {setsError && <p className={styles["error-text"]}>Sets are required</p>}
+              {setsError && <ErrorText text={'Sets are required'} />}
             </div>
             <div>
               <label>Reps</label>
               <input type="number" className={`${repsError ? styles['input-error'] : ''}`} value={reps} onChange={(event) => setReps(Number(event.target.value))} />
-              {setsError && <p className={styles["error-text"]}>Reps are required</p>}
+              {setsError && <ErrorText text={'Reps are required'} />}
             </div>
             <div>
               <label>Weight (kg)</label>
@@ -127,8 +130,8 @@ export function TrainingForm({ workoutTitle,
           <textarea placeholder="Add workout notes, instructions, rest times..." value={notes} onChange={(event) => setNotes(event.target.value)} />
         </div>
 
-        {(message && messageF) && (<div className={`${styles['message']} ${styles['failure']}`}> {message} </div>)}
-        {(message && !messageF) && (<div className={styles['message']}> {message} </div>)}
+        {successMessage && <SuccesMessage message={successMessage} />}
+        {failureMessage && <FailureMessage message={failureMessage} />}
 
         <div className={styles['buttons-container']}>
           <BackButton />

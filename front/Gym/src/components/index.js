@@ -4,6 +4,7 @@ import { FailureMessage } from './FailureMessage.jsx';
 import { SuccesMessage } from './SuccesMessage.jsx';
 import { Pagination } from './Pagination.jsx';
 import { NavBar } from "./NavBar.jsx";
+import { ErrorText } from "./ErrorText.jsx";
 
 export{
   BackButton,
@@ -11,5 +12,6 @@ export{
   FailureMessage,
   SuccesMessage,
   Pagination,
-  NavBar
+  NavBar,
+  ErrorText
 }

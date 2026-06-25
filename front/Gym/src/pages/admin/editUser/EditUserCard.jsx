@@ -2,13 +2,13 @@ import styles from './EditUserPage.module.css';
 import { useState } from 'react';
 import { MemberData } from './MemberData.jsx';
 import { TrainerData } from './TrainerData.jsx';
-import { BackButton, PrimaryButton } from '../../../components/index.js';
+import { BackButton, PrimaryButton, ErrorText, SuccesMessage, FailureMessage } from '../../../components/index.js';
 import axios from 'axios';
 
 export function EditUserCard({ user, token, userId }) {
 
   //All users info
-  const [role, setRole] = useState(user.role);
+  const { role } = user;
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
   const [gender, setGender] = useState(user.gender);
@@ -22,7 +22,17 @@ export function EditUserCard({ user, token, userId }) {
   const [price, setPrice] = useState(user?.trainerData?.hourlyRate);
   const [specialization, setSpecialization] = useState(user?.trainerData?.specialization);
 
+  //Errors
+  const [firstNameError, setFirstNameError] = useState(false);
+  const [lastNameError, setLastNameError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [dateStartError, setDateStartError] = useState(false);
+  const [dateEndError, setDateEndError] = useState(false);
+  const [priceError, setPriceError] = useState(false);
+  const [specializationError, setSpecializationError] = useState(false);
+
   const [successMessage, setSuccessMessage] = useState('');
+  const [failureMessage, setFailureMessage] = useState('');
 
   function createPayload() {
 
@@ -54,6 +64,59 @@ export function EditUserCard({ user, token, userId }) {
 
   async function editUser() {
 
+    let hasError;
+
+    if (lastName === '') {
+      setLastNameError(true);
+      hasError = true;
+    } else {
+      setLastNameError(false);
+    }
+    if (firstName === '') {
+      setFirstNameError(true);
+      hasError = true;
+    } else {
+      setFirstNameError(false);
+    }
+    if (email === '') {
+      setEmailError(true);
+      hasError = true;
+    } else {
+      setEmailError(false);
+    }
+
+    if (role === 'member') {
+      if (dateStart === '') {
+        setDateStartError(true)
+        hasError = true;
+      } else {
+        setDateStartError(false);
+      }
+      if (dateEnd === '') {
+        setDateEndError(true)
+        hasError = true;
+      } else {
+        setDateEndError(false);
+      }
+    }
+
+    if (role === 'trainer') {
+      if (specialization === '') {
+        setSpecializationError(true)
+        hasError = true;
+      } else {
+        setSpecializationError(false);
+      }
+      if (!price || price <= 0) {
+        setPriceError(true)
+        hasError = true;
+      } else {
+        setPriceError(false);
+      }
+    }
+
+    if (hasError) return;
+
     const payLoad = createPayload();
 
     try {
@@ -69,6 +132,11 @@ export function EditUserCard({ user, token, userId }) {
         setSuccessMessage('');
       }, 3000);
     } catch (error) {
+      setFailureMessage(error.response.data.msg);
+
+      setTimeout(() => {
+        setFailureMessage('');
+      }, 3000);
       console.log(error);
     }
   }
@@ -85,12 +153,14 @@ export function EditUserCard({ user, token, userId }) {
 
         <div className={styles['input-group']}>
           <label>First Name</label>
-          <input type="text" value={firstName} onChange={(event) => setFirstName(event.target.value)} />
+          <input type="text" className={firstNameError ? `${styles['input-error']}` : ''} value={firstName} onChange={(event) => setFirstName(event.target.value)} />
+          {firstNameError && <ErrorText text={'First name is required.'} />}
         </div>
 
         <div className={styles['input-group']}>
           <label>Last Name</label>
-          <input type="text" value={lastName} onChange={(event) => setLastName(event.target.value)} />
+          <input type="text" className={lastNameError ? `${styles['input-error']}` : ''} value={lastName} onChange={(event) => setLastName(event.target.value)} />
+          {lastNameError && <ErrorText text={'Last name is required.'} />}
         </div>
 
         <div className={styles['input-group']}>
@@ -102,17 +172,9 @@ export function EditUserCard({ user, token, userId }) {
         </div>
 
         <div className={styles['input-group']}>
-          <label>Role</label>
-          <select name="role" value={role} onChange={(event) => setRole(event.target.value)}>
-            <option value="member">Member</option>
-            <option value="trainer">Trainer</option>
-            <option value="admin">Admin</option>
-          </select>
-        </div>
-
-        <div className={styles['input-group']}>
           <label>Email</label>
-          <input type="text" value={email} onChange={(event) => setEmail(event.target.value)} />
+          <input type="text" className={emailError ? `${styles['input-error']}` : ''} value={email} onChange={(event) => setEmail(event.target.value)} />
+          {emailError && <ErrorText text={'Email is required.'} />}
         </div>
 
       </div>
@@ -122,21 +184,26 @@ export function EditUserCard({ user, token, userId }) {
           dateStart={dateStart}
           setDateStart={setDateStart}
           dateEnd={dateEnd}
+          dateStartError={dateStartError}
           setDateEnd={setDateEnd}
+          dateEndError={dateEndError}
           assignedTrainer={user?.memberData?.assignedTrainer}
           memberName={user.firstName}
           memberId={user._id}
         />}
-        {role === 'trainer' && <TrainerData 
-        assignedMembers={user?.trainerData.assignedMembers} 
-        price={price} 
-        specialization={specialization} 
-        setPrice={setPrice} 
-        setSpecialization={setSpecialization} 
+        {role === 'trainer' && <TrainerData
+          assignedMembers={user?.trainerData?.assignedMembers}
+          price={price}
+          priceError={priceError}
+          specialization={specialization}
+          specializationError={specializationError}
+          setPrice={setPrice}
+          setSpecialization={setSpecialization}
         />}
       </div>
 
-      {successMessage && (<div className={styles['success-message']}> {successMessage} </div>)}
+      {successMessage && <SuccesMessage message={successMessage} />}
+      {failureMessage && <FailureMessage message={failureMessage} />}
 
       <div className={styles['buttons-container']}>
         <BackButton />

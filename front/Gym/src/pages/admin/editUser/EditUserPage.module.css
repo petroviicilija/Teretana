@@ -130,6 +130,38 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   }
 }
 
+/*Input error*/
+
+.input-error {
+  border: 2px solid #ff3b3b !important;
+  box-shadow:
+    0 0 10px rgba(255, 59, 59, 0.5),
+    0 0 20px rgba(255, 59, 59, 0.25);
+  animation: shake 0.25s ease-in-out;
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-4px);
+  }
+
+  50% {
+    transform: translateX(4px);
+  }
+
+  75% {
+    transform: translateX(-4px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
 /*Buttons*/
 .buttons-container {
   display: flex;

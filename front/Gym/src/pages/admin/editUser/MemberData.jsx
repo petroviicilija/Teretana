@@ -1,8 +1,9 @@
 import styles from './EditUserPage.module.css';
 import { useNavigate } from 'react-router';
 import { PrimaryButton } from '../../../components';
+import { ErrorText } from '../../../components';
 
-export function MemberData({ dateStart, setDateStart, dateEnd, setDateEnd, assignedTrainer, memberName, memberId }) {
+export function MemberData({ dateStart, dateStartError, setDateStart, dateEnd, dateEndError, setDateEnd, assignedTrainer, memberName, memberId }) {
 
   const navigate = useNavigate();
 
@@ -10,11 +11,13 @@ export function MemberData({ dateStart, setDateStart, dateEnd, setDateEnd, assig
     <>
       <div className={styles['input-group']}>
         <label>Start Membership</label>
-        <input type="date" value={dateStart} onChange={(event) => setDateStart(event.target.value)} />
+        <input type="date" className={dateStartError ? `${styles['input-error']}` : ''} value={dateStart} onChange={(event) => setDateStart(event.target.value)} />
+        {dateStartError && <ErrorText text={'Start date is required.'} />}
       </div>
       <div className={styles['input-group']}>
         <label>End Membership</label>
-        <input type="date" value={dateEnd} onChange={(event) => setDateEnd(event.target.value)} />
+        <input type="date" className={dateEndError ? `${styles['input-error']}` : ''} value={dateEnd} onChange={(event) => setDateEnd(event.target.value)} />
+        {dateEndError && <ErrorText text={'End date is required.'} />}
       </div>
       {assignedTrainer ?
         <div className={styles['input-group']}>
