@@ -4,21 +4,19 @@ import { PrimaryButton, ErrorText, SuccesMessage, FailureMessage } from '../../c
 import axios from 'axios';
 
 export function ProfileForm({
-  firstName,
-  setFirstName,
-  lastName,
-  setLastName,
-  email,
-  setEmail,
+  formData,
+  handleChange,
   token,
   personalInfoPath,
   changePasswordPath,
   getInfo,
   renderSpecialCard }) {
 
-  const [firstNameError, setFirstNameError] = useState(false);
-  const [lastNameError, setLastNameError] = useState(false);
-  const [emailError, setEmailError] = useState(false);
+  const [errors, setErrors] = useState({
+    firstName: false,
+    lastName: false,
+    email: false
+  });
 
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -68,34 +66,21 @@ export function ProfileForm({
 
   async function saveChanges() {
 
-    let hasError;
-
-    if (firstName === '') {
-      hasError = true;
-      setFirstNameError(true);
-    } else {
-      setFirstNameError(false);
-    }
-    if (lastName === '') {
-      hasError = true;
-      setLastNameError(true);
-    } else {
-      setLastNameError(false);
-    }
-    if (email === '') {
-      hasError = true;
-      setEmailError(true);
-    } else {
-      setEmailError(false);
+    const newErrors = {
+      firstName: !formData.firstName,
+      lastName: !formData.lastName,
+      email: !formData.email
     }
 
-    if (hasError) return;
+    setErrors(newErrors);
+
+    if (Object.values(newErrors).some(Boolean)) return;
 
     try {
       await axios.patch(personalInfoPath, {
-        firstName,
-        lastName,
-        email
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email
       }, {
         headers: {
           Authorization: `Bearer ${token}`
@@ -132,18 +117,18 @@ export function ProfileForm({
           </div>
           <div className={styles['input-group']}>
             <label>First Name:</label>
-            <input type="text" className={firstNameError ? `${styles['input-error']}` : ''} value={firstName} onChange={(event) => setFirstName(event.target.value)} />
-            {firstNameError && <ErrorText text={'First name is required.'} />}
+            <input type="text" className={errors.firstName ? `${styles['input-error']}` : ''} name="firstName" value={formData.firstName} onChange={handleChange} />
+            {errors.firstName && <ErrorText text={'First name is required.'} />}
           </div>
           <div className={styles['input-group']}>
             <label>Last Name: </label>
-            <input type="text" className={lastNameError ? `${styles['input-error']}` : ''} value={lastName} onChange={(event) => setLastName(event.target.value)} />
-            {lastNameError && <ErrorText text={'Last name is required.'} />}
+            <input type="text" className={errors.lastName ? `${styles['input-error']}` : ''} name="lastName" value={formData.lastName} onChange={handleChange} />
+            {errors.lastName && <ErrorText text={'Last name is required.'} />}
           </div>
           <div className={styles['input-group']}>
             <label>Email: </label>
-            <input type="text" className={emailError ? `${styles['input-error']}` : ''} value={email} onChange={(event) => setEmail(event.target.value)} />
-            {emailError && <ErrorText text={'Email name is required.'} />}
+            <input type="text" className={errors.email ? `${styles['input-error']}` : ''} name="email" value={formData.email} onChange={handleChange} />
+            {errors.email && <ErrorText text={'Email name is required.'} />}
           </div>
 
           <div className={styles['btn-wrapper']}>

@@ -10,10 +10,21 @@ export function MemberProfilePage() {
   const { token } = useOutletContext();
   const navigate = useNavigate();
 
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: ''
+  });
   const [memberInfo, setMemberInfo] = useState();
+
+  function handleChange(event) {
+    const { name, value } = event.target;
+
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  }
 
   async function getMemberInfo() {
     try {
@@ -23,9 +34,11 @@ export function MemberProfilePage() {
         }
       });
 
-      setFirstName(res.data.firstName);
-      setLastName(res.data.lastName);
-      setEmail(res.data.email);
+      setFormData({
+        firstName: res.data.firstName,
+        lastName: res.data.lastName,
+        email: res.data.email
+      });
       setMemberInfo(res.data);
     } catch (error) {
       console.log(error);
@@ -81,12 +94,9 @@ export function MemberProfilePage() {
   }
 
   return (
-    <ProfileForm firstName={firstName}
-      setFirstName={setFirstName}
-      lastName={lastName}
-      setLastName={setLastName}
-      email={email}
-      setEmail={setEmail}
+    <ProfileForm
+      formData={formData}
+      handleChange={handleChange}
       token={token}
       personalInfoPath={'/api/v1/member'}
       changePasswordPath={'/api/v1/member/password'}

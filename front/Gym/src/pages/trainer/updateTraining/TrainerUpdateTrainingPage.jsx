@@ -5,16 +5,28 @@ import axios from 'axios';
 
 export function TrainerUpdateTrainigPage() {
 
-  const [workoutTitle, setWorkoutTitle] = useState('');
-  const [workoutTitleError, setWorkoutTitleError] = useState(false);
-  const [exercises, setExercises] = useState([]);
-  const [notes, setNotes] = useState('');
+  const [formData, setFormData] = useState({
+    workoutTitle: '',
+    exercises: [],
+    notes: ''
+  });
 
+  function handleChange(event) {
+    const { name, value } = event.target;
+
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  }
+  
+  const [workoutTitleError, setWorkoutTitleError] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const [failureMessage, setFailureMessage] = useState('');
 
   const { token } = useOutletContext();
   const { trainingId, memberId } = useParams();
+  const [loading,setLoading] = useState(true);
 
   async function handleUpdate(exercises, workoutTitle, notes) {
 
@@ -74,9 +86,12 @@ export function TrainerUpdateTrainigPage() {
         }
       });
 
-      setWorkoutTitle(res.data.title);
-      setNotes(res.data.notes);
-      setExercises(res.data.exercises);
+      setFormData({
+        workoutTitle: res.data.title,
+        exercises: res.data.exercises,
+        notes: res.data.notes
+      });
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -86,18 +101,16 @@ export function TrainerUpdateTrainigPage() {
     getTrainigInfo();
   }, []);
 
-  if (!exercises) return;
+  if (loading) return;
 
   return (
     <>
-      <TrainingForm trainingFromTitle={'Update Client Workouts'}
-        trainingFromSubtitle={'Build tailored training plans to help your clients reach their goals.'}
-        workoutTitle={workoutTitle}
-        setWorkoutTitle={setWorkoutTitle}
-        exercises={exercises}
-        setExercises={setExercises}
-        notes={notes}
-        setNotes={setNotes}
+      <TrainingForm 
+        trainingFormTitle={'Update Client Workouts'}
+        trainingFormSubtitle={'Build tailored training plans to help your clients reach their goals.'}
+        formData={formData}
+        handleChange={handleChange}
+        setFormData={setFormData}
         workoutTitleError={workoutTitleError}
         successMessage={successMessage}
         failureMessage={failureMessage}

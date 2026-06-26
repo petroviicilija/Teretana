@@ -7,9 +7,21 @@ import axios from 'axios';
 
 export function TraienrProfilePage() {
 
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: ''
+  });
+
+  function handleChange(event) {
+    const { name, value } = event.target;
+
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  }
+
   const [trainerInfo, setTrainerInfo] = useState();
 
   const { token } = useOutletContext();
@@ -26,9 +38,11 @@ export function TraienrProfilePage() {
       });
 
       setTrainerInfo(res.data);
-      setEmail(res.data.email);
-      setFirstName(res.data.firstName);
-      setLastName(res.data.lastName);
+      setFormData({
+        firstName: res.data.firstName,
+        lastName: res.data.lastName,
+        email: res.data.email
+      })
     } catch (error) {
       console.log(error);
     }
@@ -73,12 +87,9 @@ export function TraienrProfilePage() {
   }
 
   return (
-    <ProfileForm firstName={firstName}
-      setFirstName={setFirstName}
-      lastName={lastName}
-      setLastName={setLastName}
-      email={email}
-      setEmail={setEmail}
+    <ProfileForm 
+      formData={formData}
+      handleChange={handleChange}
       token={token}
       personalInfoPath={'/api/v1/trainer'}
       changePasswordPath={'/api/v1/trainer/password'}

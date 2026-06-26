@@ -5,16 +5,29 @@ import axios from 'axios';
 
 export function UpdateTrainingPage() {
 
-  const [workoutTitle, setWorkoutTitle] = useState('');
+  const [formData, setFormData] = useState({
+    workoutTitle:'',
+    exercises: [],
+    notes: ''
+  });
+
+  function handleChange(event) {
+    const { name, value } = event.target;
+
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  }
+
   const [workoutTitleError, setWorkoutTitleError] = useState(false);
-  const [exercises, setExercises] = useState([]);
-  const [notes, setNotes] = useState('');
 
   const [successMessage, setSuccessMessage] = useState('');
   const [failureMessage, setFailureMessage] = useState('');
 
   const { token } = useOutletContext();
   const { trainingId } = useParams();
+  const [loading, setLoading] = useState(true);
 
   async function handleUpdate(exercises, workoutTitle, notes) {
 
@@ -74,9 +87,12 @@ export function UpdateTrainingPage() {
         }
       });
 
-      setWorkoutTitle(res.data.title);
-      setNotes(res.data.notes);
-      setExercises(res.data.exercises);
+      setFormData({
+        workoutTitle: res.data.title,
+        exercises: res.data.exercises,
+        notes: res.data.notes
+      });
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -86,19 +102,16 @@ export function UpdateTrainingPage() {
     getTrainigInfo();
   }, []);
 
-  if (!exercises) return;
+  if (loading) return;
 
   return (
     <>
       <TrainingForm
-        trainingFromTitle={'Update your training'}
-        trainingFromSubtitle={'Build a personalized workout plan for your fitness goals.'}
-        workoutTitle={workoutTitle}
-        setWorkoutTitle={setWorkoutTitle}
-        exercises={exercises}
-        setExercises={setExercises}
-        notes={notes}
-        setNotes={setNotes}
+        trainingFormTitle={'Update your training'}
+        trainingFormSubtitle={'Build a personalized workout plan for your fitness goals.'}
+        formData={formData}
+        setFormData={setFormData}
+        handleChange={handleChange}
         workoutTitleError={workoutTitleError}
         successMessage={successMessage}
         failureMessage={failureMessage}

@@ -3,14 +3,11 @@ import { useState } from 'react';
 import DeleteButton from '../../assets/deleteButton.png';
 import { BackButton, PrimaryButton, ErrorText, SuccesMessage, FailureMessage } from '../../components';
 
-export function TrainingForm({ trainingFromTitle,
-  trainingFromSubtitle,
-  workoutTitle,
-  setWorkoutTitle,
-  exercises,
-  setExercises,
-  notes,
-  setNotes,
+export function TrainingForm({ trainingFormTitle,
+  trainingFormSubtitle,
+  formData,
+  setFormData,
+  handleChange,
   workoutTitleError,
   successMessage,
   failureMessage,
@@ -60,7 +57,10 @@ export function TrainingForm({ trainingFromTitle,
       exercise.weight = weight;
     }
 
-    setExercises(prev => [...prev, exercise]);
+    setFormData(prev => ({
+      ...prev,
+      exercises: [...prev.exercises, exercise]
+    }));
 
     setExerciseName('')
     setReps('');
@@ -72,13 +72,13 @@ export function TrainingForm({ trainingFromTitle,
     <div className={styles['create-training-page']}>
       <div className={styles['create-training-card']}>
         <div className={styles['header-section']}>
-          <h1>{trainingFromTitle}</h1>
-          <p>{trainingFromSubtitle}</p>
+          <h1>{trainingFormTitle}</h1>
+          <p>{trainingFormSubtitle}</p>
         </div>
 
         <div className={styles['workout-title-input']}>
           <h2>Workout title: </h2>
-          <input type="text" className={`${workoutTitleError ? styles['input-error'] : ''}`} value={workoutTitle} placeholder="Push Day" onChange={(event) => setWorkoutTitle(event.target.value)} />
+          <input type="text" className={`${workoutTitleError ? styles['input-error'] : ''}`} name='workoutTitle' value={formData.workoutTitle} placeholder="Push Day" onChange={handleChange} />
           {workoutTitleError && <ErrorText text={'Workout title is required'} />}
         </div>
 
@@ -87,7 +87,7 @@ export function TrainingForm({ trainingFromTitle,
           <div>
             <div className={styles['exercise-header']}>
               <input type="text" className={`${exerciseNameError ? styles['input-error'] : ''}`} value={exerciseName} placeholder="Bench Press" onChange={(event) => setExerciseName(event.target.value)} />
-              <PrimaryButton buttonText={'Add Exercise'} handleClick={() => addExercise(exercises, exerciseName, sets, reps, weight)} />
+              <PrimaryButton buttonText={'Add Exercise'} handleClick={() => addExercise(formData.exercises, exerciseName, sets, reps, weight)} />
             </div>
             {exerciseNameError && <ErrorText text={'Exercise Name is required'} />}
           </div>
@@ -111,7 +111,7 @@ export function TrainingForm({ trainingFromTitle,
         </div>
 
         <div className={styles['exercise-list']}>
-          {exercises.length !== 0 && exercises.map((exercise, index) => (
+          {formData.exercises.length !== 0 && formData.exercises.map((exercise, index) => (
             <div key={index} className={styles['exercise-row']}>
               <span className={styles['exercise-number']}>
                 {index + 1}
@@ -120,14 +120,14 @@ export function TrainingForm({ trainingFromTitle,
                 <h4>{exercise.name}</h4>
                 <p> {exercise.sets} x {exercise.reps} {exercise.weight && ` • ${exercise.weight}kg`} </p>
               </div>
-              <img src={DeleteButton} className={styles['delete-button']} onClick={() => setExercises(exercises.filter((_, i) => i !== index))} />
+              <img src={DeleteButton} className={styles['delete-button']} onClick={() => setFormData( prev => ({...prev, exercises: prev.exercises.filter((_, i) => i !== index) }))} />
             </div>
           ))}
         </div>
 
         <div className={styles['notes-section']}>
           <span>Notes</span>
-          <textarea placeholder="Add workout notes, instructions, rest times..." value={notes} onChange={(event) => setNotes(event.target.value)} />
+          <textarea placeholder="Add workout notes, instructions, rest times..." name='notes' value={formData.notes} onChange={handleChange} />
         </div>
 
         {successMessage && <SuccesMessage message={successMessage} />}
@@ -135,7 +135,7 @@ export function TrainingForm({ trainingFromTitle,
 
         <div className={styles['buttons-container']}>
           <BackButton />
-          <PrimaryButton buttonText={submitText} handleClick={() => onSubmit(exercises, workoutTitle, notes)} />
+          <PrimaryButton buttonText={submitText} handleClick={() => onSubmit(formData.exercises, formData.workoutTitle, formData.notes)} />
         </div>
       </div>
     </div>

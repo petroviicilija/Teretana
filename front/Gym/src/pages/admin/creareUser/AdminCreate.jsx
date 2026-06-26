@@ -10,119 +10,108 @@ export function AdminCreate() {
   const [successMessage, setSuccessMessage] = useState('');
   const [failureMessage, setFailureMessage] = useState('');
 
-  //All users info
-  const [role, setRole] = useState('member');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+  const [formData, setFormData] = useState({
+    role: 'member',
+    firstName: '',
+    lastName: '',
+    gender: 'man',
+    email: '',
+    password: '',
+    dateStart: '',
+    dateEnd: '',
+    price: '',
+    specialization: ''
+  });
 
-  const [gender, setGender] = useState('man');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [errors, setErrors] = useState({
+    firstName: false,
+    lastName: false,
+    email: false,
+    password: false,
+    dateStart: false,
+    dateEnd: false,
+    price: false,
+    specialization: false
+  });
 
+  function handleChange(event) {
+    const { name, value } = event.target;
 
-  //Memmber Info
-  const [dateStart, setDateStart] = useState('');
-  const [dateEnd, setDateEnd] = useState('');
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  }
 
-  //Trainer info
-  const [price, setPrice] = useState(0);
-  const [specialization, setSpecialization] = useState('');
+  async function createUser() {
 
-  //Errors
-  const [firstNameError, setFirstNameError] = useState(false);
-  const [lastNameError, setLastNameError] = useState(false);
-  const [emailError, setEmailError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
-  const [dateStartError, setDateStartError] = useState(false);
-  const [dateEndError, setDateEndError] = useState(false);
-  const [priceError, setPriceError] = useState(false);
-  const [specializationError, setSpecializationError] = useState(false);
+    const newErrors = {
+      firstName: !formData.firstName,
+      lastName: !formData.lastName,
+      email: !formData.email,
+      password: !formData.password,
+      dateStart:
+        formData.role === 'member' && !formData.dateStart,
+      dateEnd:
+        formData.role === 'member' && !formData.dateEnd,
+      specialization:
+        formData.role === 'trainer' && !formData.specialization,
+      price:
+        formData.role === 'trainer' &&
+        (!formData.price || formData.price <= 0)
+    };
 
-  async function createUser(createPayload) {
+    setErrors(newErrors);
 
-    let hasError;
+    if (Object.values(newErrors).some(Boolean)) return;
 
-    if (lastName === '') {
-      setLastNameError(true);
-      hasError = true;
-    } else {
-      setLastNameError(false);
-    }
-    if (firstName === '') {
-      setFirstNameError(true);
-      hasError = true;
-    } else {
-      setFirstNameError(false);
-    }
-    if (email === '') {
-      setEmailError(true);
-      hasError = true;
-    } else {
-      setEmailError(false);
-    }
-    if (password === '') {
-      setPasswordError(true);
-      hasError = true;
-    } else {
-      setPasswordError(false);
-    }
-
-    if (role === 'member') {
-      if (dateStart === '') {
-        setDateStartError(true)
-        hasError = true;
-      } else {
-        setDateStartError(false);
-      }
-      if (dateEnd === '') {
-        setDateEndError(true)
-        hasError = true;
-      } else {
-        setDateEndError(false);
-      }
-    }
-
-    if (role === 'trainer') {
-      if (specialization === '') {
-        setSpecializationError(true)
-        hasError = true;
-      } else {
-        setSpecializationError(false);
-      }
-      if (!price || price <= 0) {
-        setPriceError(true)
-        hasError = true;
-      } else {
-        setPriceError(false);
-      }
-    }
-
-    if (hasError) return;
-
-    const payLoad = createPayload();
+    const payload = {
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      email: formData.email,
+      password: formData.password,
+      role: formData.role,
+      gender: formData.gender,
+      ...(formData.role === 'member' && {
+        memberData: {
+          membershipStart: formData.dateStart,
+          membershipEnd: formData.dateEnd
+        }
+      }),
+      ...(formData.role === 'trainer' && {
+        trainerData: {
+          specialization: formData.specialization,
+          hourlyRate: formData.price
+        }
+      })
+    };
 
     try {
-      await axios.post('/api/v1/admin', payLoad, {
+      await axios.post('/api/v1/admin', payload, {
         headers: {
           Authorization: `Bearer ${token}`
         }
-      })
+      });
 
       setSuccessMessage('New user successfully created!');
 
-      setFirstName('');
-      setLastName('');
-      setGender('man');
-      setEmail('');
-      setPassword('');
-      setRole('member');
-      setDateStart('');
-      setPrice('');
-      setSpecialization('');
+      setFormData({
+        role: 'member',
+        firstName: '',
+        lastName: '',
+        gender: 'man',
+        email: '',
+        password: '',
+        dateStart: '',
+        dateEnd: '',
+        price: '',
+        specialization: ''
+      });
 
       setTimeout(() => {
         setSuccessMessage('');
       }, 3000);
+
     } catch (error) {
 
       setFailureMessage(error.response.data.msg);
@@ -130,44 +119,21 @@ export function AdminCreate() {
       setTimeout(() => {
         setFailureMessage('');
       }, 3000);
+
       console.log(error);
     }
   }
 
   return (
-    <UserForm mode="create"
-      firstName={firstName}
-      firstNameError={firstNameError}
-      setFirstName={setFirstName}
-      lastName={lastName}
-      lastNameError={lastNameError}
-      setLastName={setLastName}
-      gender={gender}
-      setGender={setGender}
-      role={role}
-      setRole={setRole}
-      email={email}
-      emailError={emailError}
-      setEmail={setEmail}
-      password={password}
-      passwordError={passwordError}
-      setPassword={setPassword}
-      dateStart={dateStart}
-      dateStartError={dateStartError}
-      setDateStart={setDateStart}
-      dateEnd={dateEnd}
-      dateEndError={dateEndError}
-      setDateEnd={setDateEnd}
-      price={price}
-      priceError={priceError}
-      specialization={specialization}
-      specializationError={specializationError}
-      setPrice={setPrice}
-      setSpecialization={setSpecialization}
+    <UserForm
+      mode="create"
+      formData={formData}
+      errors={errors}
+      handleChange={handleChange}
       successMessage={successMessage}
       failureMessage={failureMessage}
-      submitText='Create User'
+      submitText="Create User"
       submitFunction={createUser}
     />
-  )
+  );
 }

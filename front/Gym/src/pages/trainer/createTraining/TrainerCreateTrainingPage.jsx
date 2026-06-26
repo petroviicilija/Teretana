@@ -5,11 +5,22 @@ import axios from 'axios';
 
 export function TrainerCreateTrainingPage() {
 
-  const [workoutTitle, setWorkoutTitle] = useState('');
-  const [workoutTitleError, setWorkoutTitleError] = useState(false);
-  const [exercises, setExercises] = useState([]);
-  const [notes, setNotes] = useState('');
+  const [formData, setFormData] = useState({
+    workoutTitle: '',
+    exercises: [],
+    notes: ''
+  });
 
+  function handleChange(event) {
+    const { name, value } = event.target;
+
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  }
+  
+  const [workoutTitleError, setWorkoutTitleError] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const [failureMessage, setFailureMessage] = useState('');
 
@@ -54,9 +65,11 @@ export function TrainerCreateTrainingPage() {
       });
 
       setSuccessMessage('You succesfully made training.')
-      setWorkoutTitle('');
-      setExercises([]);
-      setNotes('');
+      setFormData({
+        workoutTitle: '',
+        exercises: [],
+        notes: ''
+      });
 
       setTimeout(() => {
         setSuccessMessage('');
@@ -73,14 +86,12 @@ export function TrainerCreateTrainingPage() {
   }
 
   return (
-    <TrainingForm trainingFromTitle={'Create Client Workouts'}
-      trainingFromSubtitle={'Build tailored training plans to help your clients reach their goals.'} 
-      workoutTitle={workoutTitle}
-      setWorkoutTitle={setWorkoutTitle}
-      exercises={exercises}
-      setExercises={setExercises}
-      notes={notes}
-      setNotes={setNotes}
+    <TrainingForm 
+      trainingFormTitle={'Create Client Workouts'}
+      trainingFormSubtitle={'Build tailored training plans to help your clients reach their goals.'} 
+      formData={formData}
+      handleChange={handleChange}
+      setFormData={setFormData}
       workoutTitleError={workoutTitleError}
       successMessage={successMessage}
       failureMessage={failureMessage}
