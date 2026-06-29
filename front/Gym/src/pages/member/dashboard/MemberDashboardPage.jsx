@@ -49,8 +49,9 @@ export function MemberDashboardPage() {
   function calculateRemainingDays(membershipEnd) {
     const end = new Date(membershipEnd);
     const today = new Date();
+    const remains = Math.floor((end - today) / (1000 * 60 * 60 * 24)) < 0 ? 0 : Math.floor((end - today) / (1000 * 60 * 60 * 24))
 
-    return Math.floor((end - today) / (1000 * 60 * 60 * 24));
+    return remains;
   }
 
   if (!memberInfo || !myTrainings || !trainersTrainings) return;
